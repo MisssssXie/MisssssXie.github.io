@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Hexo,categories,">
 
 
 
@@ -79,16 +79,20 @@
 
 
 
-<meta name="description" content="怕忘記，就學著做筆記。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xie&#39;s Blog">
-<meta property="og:url" content="https://missxie.github.io/index.html">
+<meta name="description" content="前言碎碎念嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：] 流程概述 建立「TensorFlow」資料夾 更改資料夾內「index」md 檔敘述 部署  開始實作1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」$ cd your-hexo-s">
+<meta name="keywords" content="Hexo,categories">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo如何建立「子分類」資料夾">
+<meta property="og:url" content="https://missxie.github.io/2019/03/28/CreateSubCategories/index.html">
 <meta property="og:site_name" content="Xie&#39;s Blog">
-<meta property="og:description" content="怕忘記，就學著做筆記。">
+<meta property="og:description" content="前言碎碎念嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：] 流程概述 建立「TensorFlow」資料夾 更改資料夾內「index」md 檔敘述 部署  開始實作1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」$ cd your-hexo-s">
 <meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://missxie.github.io/images/hexo1.png">
+<meta property="og:updated_time" content="2019-04-07T11:37:02.721Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xie&#39;s Blog">
-<meta name="twitter:description" content="怕忘記，就學著做筆記。">
+<meta name="twitter:title" content="Hexo如何建立「子分類」資料夾">
+<meta name="twitter:description" content="前言碎碎念嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：] 流程概述 建立「TensorFlow」資料夾 更改資料夾內「index」md 檔敘述 部署  開始實作1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」$ cd your-hexo-s">
+<meta name="twitter:image" content="https://missxie.github.io/images/hexo1.png">
 
 
 
@@ -118,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://missxie.github.io/">
+  <link rel="canonical" href="https://missxie.github.io/2019/03/28/CreateSubCategories/">
 
 
 
 
 
-  <title>Xie's Blog</title>
+  <title>Hexo如何建立「子分類」資料夾 | Xie's Blog</title>
   
 
 
@@ -143,8 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,9 +240,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -269,9 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/28/CreateSubCategories/" itemprop="url">Hexo如何建立「子分類」資料夾</a></h1>
+          <h1 class="post-title" itemprop="name headline">Hexo如何建立「子分類」資料夾</h1>
         
 
         <div class="post-meta">
@@ -343,9 +344,7 @@
       
 
       
-        
-          
-            <h2 id="前言碎碎念"><a href="#前言碎碎念" class="headerlink" title="前言碎碎念"></a><strong>前言碎碎念</strong></h2><p>嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：]</p>
+        <h2 id="前言碎碎念"><a href="#前言碎碎念" class="headerlink" title="前言碎碎念"></a><strong>前言碎碎念</strong></h2><p>嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：]</p>
 <h2 id="流程概述"><a href="#流程概述" class="headerlink" title="流程概述"></a><strong>流程概述</strong></h2><ol>
 <li>建立「TensorFlow」資料夾</li>
 <li>更改資料夾內「index」md 檔敘述</li>
@@ -390,8 +389,6 @@ comments: false
 </table>
 <p><img src="/images/hexo1.png" alt="實作結果"></p>
 
-          
-        
       
     </div>
     
@@ -406,155 +403,38 @@ comments: false
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2019/03/28/HellWord/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sally Xie">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xie's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/28/HellWord/" itemprop="url">HellWord</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-03-28T00:05:07+08:00">
-                2019-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/TensorFlow/" itemprop="url" rel="index">
-                    <span itemprop="name">TensorFlow</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
           
-
+            <a href="/tags/categories/" rel="tag"># categories</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-          
-        
-      
-    </div>
-    
-    
-    
+              <a href="/2019/03/28/HellWord/" rel="next" title="HellWord">
+                <i class="fa fa-chevron-left"></i> HellWord
+              </a>
+            
+          </div>
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -564,10 +444,11 @@ comments: false
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -575,6 +456,10 @@ comments: false
 
 
           
+
+  
+
+
 
         </div>
         
@@ -595,8 +480,17 @@ comments: false
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -656,6 +550,22 @@ comments: false
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言碎碎念"><span class="nav-number">1.</span> <span class="nav-text">前言碎碎念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程概述"><span class="nav-number">2.</span> <span class="nav-text">流程概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#開始實作"><span class="nav-number">3.</span> <span class="nav-text">開始實作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」"><span class="nav-number">3.0.1.</span> <span class="nav-text">1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index-md檔修改內容"><span class="nav-number">3.0.2.</span> <span class="nav-text">2.  到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index.md檔修改內容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-回到終端機下部署剛剛建立好的資料夾囉"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.  回到終端機下部署剛剛建立好的資料夾囉</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-最後啟動伺服器，預設是-http-localhost-4000-立即觀看改變效果"><span class="nav-number">3.0.4.</span> <span class="nav-text">4.  最後啟動伺服器，預設是 http://localhost:4000 立即觀看改變效果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -792,6 +702,10 @@ comments: false
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
