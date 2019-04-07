@@ -345,17 +345,15 @@
       
         
           
-            <h2 id="前言碎碎念"><a href="#前言碎碎念" class="headerlink" title="前言碎碎念"></a><strong>前言碎碎念</strong></h2><p>嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：]</p>
-<h2 id="流程概述"><a href="#流程概述" class="headerlink" title="流程概述"></a><strong>流程概述</strong></h2><ol>
+            <h1 id="前言碎碎念"><a href="#前言碎碎念" class="headerlink" title="前言碎碎念"></a><strong>前言碎碎念</strong></h1><p>嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：]</p>
+<h1 id="流程概述"><a href="#流程概述" class="headerlink" title="流程概述"></a><strong>流程概述</strong></h1><ol>
 <li>建立「TensorFlow」資料夾</li>
 <li>更改資料夾內「index」md 檔敘述</li>
 <li>部署</li>
 </ol>
-<h2 id="開始實作"><a href="#開始實作" class="headerlink" title="開始實作"></a><strong>開始實作</strong></h2><p>到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」</p>
-<pre><code>$ cd your-hexo-site
+<h1 id="開始實作"><a href="#開始實作" class="headerlink" title="開始實作"></a><strong>開始實作</strong></h1><h4 id="1-到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」"><a href="#1-到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」" class="headerlink" title="1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」"></a>1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」</h4><pre><code>$ cd your-hexo-site
 $ hexo new page TensorFlow
-</code></pre><p>到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index.md檔修改內容</p>
-<pre><code>---
+</code></pre><h4 id="2-到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index-md檔修改內容"><a href="#2-到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index-md檔修改內容" class="headerlink" title="2.  到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index.md檔修改內容"></a>2.  到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index.md檔修改內容</h4><pre><code>---
 title: TensorFlow
 date: 2019-03-30 00:34:34
 type: &quot;categories&quot;
@@ -366,10 +364,8 @@ comments: false
 <li>type敘述是主資料夾，若加雙引號就是標記要在主資料夾(categories)下建立子資料夾(TensorFlow)。</li>
 <li>頁面也會帶有評論。若需要關閉的話，請加入字段comments並將值設置為false。</li>
 </ol>
-<p>回到終端機下部署剛剛建立好的資料夾囉 </p>
-<pre><code>$ sudo hexo d -g
-</code></pre><p>最後啟動伺服器，預設是 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 立即觀看改變效果</p>
-<pre><code>$ sudo hexo s
+<h4 id="3-回到終端機下部署剛剛建立好的資料夾囉"><a href="#3-回到終端機下部署剛剛建立好的資料夾囉" class="headerlink" title="3.  回到終端機下部署剛剛建立好的資料夾囉"></a>3.  回到終端機下部署剛剛建立好的資料夾囉</h4><pre><code>$ sudo hexo d -g
+</code></pre><h4 id="4-最後啟動伺服器，預設是-http-localhost-4000-立即觀看改變效果"><a href="#4-最後啟動伺服器，預設是-http-localhost-4000-立即觀看改變效果" class="headerlink" title="4.  最後啟動伺服器，預設是 http://localhost:4000 立即觀看改變效果"></a>4.  最後啟動伺服器，預設是 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 立即觀看改變效果</h4><pre><code>$ sudo hexo s
 </code></pre><table>
 <thead>
 <tr>
@@ -392,7 +388,7 @@ comments: false
 </tr>
 </tbody>
 </table>
-<h4 id="實作結果"><a href="#實作結果" class="headerlink" title="實作結果"></a>實作結果</h4><p><img src="/images/hexo1.png" alt="實作結果"></p>
+<h1 id="實作結果"><a href="#實作結果" class="headerlink" title="實作結果"></a><strong>實作結果</strong></h1><p><img src="/images/hexo1.png" alt="實作結果"></p>
 
           
         
