@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C#,ASP.NET,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言碎碎念嗨，大家好！最近在學習如何提升效能的基礎訓練，所以把一些比較生疏的觀念寫成文章記錄一下。Value type 跟 Reference type 使用技巧真的非常重要哦。 蝦咪是Boxing(裝箱)、Unboxing(拆箱) ? 簡單講就是，實值型別 與 參考型別 「互相轉型」的過程   Boxing - 將Value type (實質型別) 隱含轉換成 Object (參考型別)  Un">
+<meta name="keywords" content="C#,ASP.NET">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C# Boxing(裝箱)和Unboxing(拆箱)">
+<meta property="og:url" content="https://missxie.github.io/2019/04/08/boxing/index.html">
+<meta property="og:site_name" content="Xie&#39;s Blog">
+<meta property="og:description" content="前言碎碎念嗨，大家好！最近在學習如何提升效能的基礎訓練，所以把一些比較生疏的觀念寫成文章記錄一下。Value type 跟 Reference type 使用技巧真的非常重要哦。 蝦咪是Boxing(裝箱)、Unboxing(拆箱) ? 簡單講就是，實值型別 與 參考型別 「互相轉型」的過程   Boxing - 將Value type (實質型別) 隱含轉換成 Object (參考型別)  Un">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://missxie.github.io/images/boxing_3.JPG">
+<meta property="og:image" content="https://missxie.github.io/images/output.png">
+<meta property="og:updated_time" content="2019-04-08T16:31:00.055Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C# Boxing(裝箱)和Unboxing(拆箱)">
+<meta name="twitter:description" content="前言碎碎念嗨，大家好！最近在學習如何提升效能的基礎訓練，所以把一些比較生疏的觀念寫成文章記錄一下。Value type 跟 Reference type 使用技巧真的非常重要哦。 蝦咪是Boxing(裝箱)、Unboxing(拆箱) ? 簡單講就是，實值型別 與 參考型別 「互相轉型」的過程   Boxing - 將Value type (實質型別) 隱含轉換成 Object (參考型別)  Un">
+<meta name="twitter:image" content="https://missxie.github.io/images/boxing_3.JPG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://missxie.github.io/2019/04/08/boxing/">
+
+
+
+
+
+  <title>C# Boxing(裝箱)和Unboxing(拆箱) | Xie's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xie's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">學習筆記本</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2019/04/08/boxing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sally Xie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C# Boxing(裝箱)和Unboxing(拆箱)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-04-08T23:56:36+08:00">
+                2019-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言碎碎念"><a href="#前言碎碎念" class="headerlink" title="前言碎碎念"></a><strong>前言碎碎念</strong></h1><p>嗨，大家好！最近在學習如何提升效能的基礎訓練，所以把一些比較生疏的觀念寫成文章記錄一下。Value type 跟 Reference type 使用技巧真的非常重要哦。</p>
+<h3 id="蝦咪是Boxing-裝箱-、Unboxing-拆箱"><a href="#蝦咪是Boxing-裝箱-、Unboxing-拆箱" class="headerlink" title="蝦咪是Boxing(裝箱)、Unboxing(拆箱) ?"></a><u>蝦咪是Boxing(裝箱)、Unboxing(拆箱) ?</u></h3><p> 簡單講就是，實值型別 與 參考型別 「互相轉型」的過程 </p>
+<ul>
+<li>Boxing - 將Value type (實質型別) 隱含轉換成 Object (參考型別) </li>
+<li>Unboxing - 將Object (參考型別) 明確轉換成 Value type (實質型別) </li>
+<li>兩者轉換過程，通常會與「效能」有很大的關係 ! </li>
+</ul>
+<p><br></p>
+<h1 id="圖像記憶大法"><a href="#圖像記憶大法" class="headerlink" title="圖像記憶大法"></a><strong>圖像記憶大法</strong></h1><p><img src="/images/boxing_3.JPG" alt="圖像"></p>
+<p><br></p>
+<h1 id="簡單程式範例"><a href="#簡單程式範例" class="headerlink" title="簡單程式範例"></a><strong>簡單程式範例</strong></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int i = 123 ; //Value type</span><br><span class="line">object o = i ; // Boxing - 把123裝起來了，我看不到裡面的值了</span><br><span class="line">int j = (int) o ; // Unboxing - 把123解開了，可以看到值了</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Boxing就是系統將 123 從 Stack 複製一份到 Heap 中，而 object 就指向這個位置，因 object 本身是一個Reference type，為了抓到值又多了一個指向記憶體位置的動作，小專案或許沒感覺，但在多人使用的網頁上可能就會拖慢效能 !</p>
+</li>
+<li><p>UnBoxing 處理則為將 object 型別明確轉換成 Value type 時發生，程式碼會將 object 的值複製一份到 j 變數的 Stack 中。 </p>
+</li>
+</ul>
+<p><br></p>
+<h1 id="實作"><a href="#實作" class="headerlink" title="實作"></a><strong>實作</strong></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">//無轉換動作</span><br><span class="line">private void NoDo()</span><br><span class="line">&#123;</span><br><span class="line">    Stopwatch stopWatch = new Stopwatch();</span><br><span class="line">    stopWatch.Start();</span><br><span class="line"></span><br><span class="line">    int i = 123;</span><br><span class="line">    for (int j = 0; j &lt; 100000000; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        int k = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stopWatch.Stop();</span><br><span class="line">    TimeSpan span = stopWatch.Elapsed;</span><br><span class="line">    Console.WriteLine(string.Format(&quot;無轉換 耗時 &#123;0&#125;毫秒&quot;, span.Milliseconds.ToString()));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Boxing</span><br><span class="line">private void Boxing()</span><br><span class="line">&#123;           </span><br><span class="line">    Stopwatch stopWatch = new Stopwatch();</span><br><span class="line">    stopWatch.Start();</span><br><span class="line"></span><br><span class="line">    int i = 123;</span><br><span class="line">    for (int j = 0; j &lt; 100000000; j++)</span><br><span class="line">    &#123;               </span><br><span class="line">        object o = i;// Boxing</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stopWatch.Stop();</span><br><span class="line">    TimeSpan span = stopWatch.Elapsed;</span><br><span class="line">    Console.WriteLine(string.Format(&quot;Boxing耗時 &#123;0&#125;毫秒&quot;, span.Milliseconds.ToString()));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// UnBoxing</span><br><span class="line">private void UnBoxing()</span><br><span class="line">&#123;           </span><br><span class="line">    Stopwatch stopWatch = new Stopwatch();</span><br><span class="line">    stopWatch.Start();</span><br><span class="line"></span><br><span class="line">    object o = 123;</span><br><span class="line">    for (int k = 0; k &lt; 100000000; k++)</span><br><span class="line">    &#123;               </span><br><span class="line">        int j = (int)o; // UnBoxing</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stopWatch.Stop();</span><br><span class="line">    TimeSpan span = stopWatch.Elapsed;</span><br><span class="line">    Console.WriteLine(string.Format(&quot;UnBoxing耗時 &#123;0&#125;毫秒&quot;, span.Milliseconds.ToString()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h1 id="實測結果"><a href="#實測結果" class="headerlink" title="實測結果"></a><strong>實測結果</strong></h1><p>實測發現，若未將型別轉換速度會是最快的，但將型別轉來轉去 UnBoxing 會比 Boxing 快兩倍。</p>
+<p><img src="/images/output.png" alt="實作結果"></p>
+<p><br></p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a><strong>結論</strong></h1><p> Boxing 和 Unboxing 是會耗費大量運算資源的處理序。<br>當 Value type 經過 Box 處理時，必須配置記憶體並建構物件。<br>Unboxing 雖轉換速度較快，但也同樣需要大量運算資源。</p>
+<p>在不會影響程式運行的情況下，將 Reference type 拆箱成 Value type 會加快程式效能。</p>
+<p><br></p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ul>
+<li><a href="http://nwpie.blogspot.com/2017/04/5-boxing-unboxing.html" target="_blank" rel="noopener">http://nwpie.blogspot.com/2017/04/5-boxing-unboxing.html</a></li>
+<li><a href="http://sweetkikibaby.pixnet.net/blog/post/190798401-boxing%E5%92%8Cunboxing" target="_blank" rel="noopener">http://sweetkikibaby.pixnet.net/blog/post/190798401-boxing%E5%92%8Cunboxing</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+            <a href="/tags/ASP-NET/" rel="tag"># ASP.NET</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/07/Analysis/" rel="next" title="Kaggle競賽 - LANL Earthquake Prediction 賽前資料分析">
+                <i class="fa fa-chevron-left"></i> Kaggle競賽 - LANL Earthquake Prediction 賽前資料分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sally Xie</p>
+              <p class="site-description motion-element" itemprop="description">怕忘記，就學著做筆記。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言碎碎念"><span class="nav-number">1.</span> <span class="nav-text">前言碎碎念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#蝦咪是Boxing-裝箱-、Unboxing-拆箱"><span class="nav-number">1.0.1.</span> <span class="nav-text">蝦咪是Boxing(裝箱)、Unboxing(拆箱) ?</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#圖像記憶大法"><span class="nav-number">2.</span> <span class="nav-text">圖像記憶大法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#簡單程式範例"><span class="nav-number">3.</span> <span class="nav-text">簡單程式範例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#實作"><span class="nav-number">4.</span> <span class="nav-text">實作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#實測結果"><span class="nav-number">5.</span> <span class="nav-text">實測結果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結論"><span class="nav-number">6.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">7.</span> <span class="nav-text">參考資料</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-id-card"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sally Xie</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
