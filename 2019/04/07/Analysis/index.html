@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="怕忘記，就學著做筆記。">
+<meta name="description" content="前言碎碎念嗨溜，大家好！這學期習深度學習的課，老師要我們參加Kaggle競賽，如標題所言就是「預測地震」。而我假日興沖沖地去官網下載了資料，居然有將近10G啊…這種東西一下也搞不清楚在幹嘛，那就先來搞懂「預測規則」跟「分析資料集」比較實在啦～話不多說，趕快開始囉！">
 <meta name="keywords" content="Kaggle,Data Analysis,Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kaggle競賽 - LANL Earthquake Prediction 賽前資料分析">
-<meta property="og:url" content="https://missxie.github.io/2019/03/28/Analysis/index.html">
+<meta property="og:url" content="https://missxie.github.io/2019/04/07/Analysis/index.html">
 <meta property="og:site_name" content="Xie&#39;s Blog">
-<meta property="og:description" content="怕忘記，就學著做筆記。">
+<meta property="og:description" content="前言碎碎念嗨溜，大家好！這學期習深度學習的課，老師要我們參加Kaggle競賽，如標題所言就是「預測地震」。而我假日興沖沖地去官網下載了資料，居然有將近10G啊…這種東西一下也搞不清楚在幹嘛，那就先來搞懂「預測規則」跟「分析資料集」比較實在啦～話不多說，趕快開始囉！">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-04-07T16:02:12.686Z">
+<meta property="og:updated_time" content="2019-04-07T16:12:20.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kaggle競賽 - LANL Earthquake Prediction 賽前資料分析">
-<meta name="twitter:description" content="怕忘記，就學著做筆記。">
+<meta name="twitter:description" content="前言碎碎念嗨溜，大家好！這學期習深度學習的課，老師要我們參加Kaggle競賽，如標題所言就是「預測地震」。而我假日興沖沖地去官網下載了資料，居然有將近10G啊…這種東西一下也搞不清楚在幹嘛，那就先來搞懂「預測規則」跟「分析資料集」比較實在啦～話不多說，趕快開始囉！">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://missxie.github.io/2019/03/28/Analysis/">
+  <link rel="canonical" href="https://missxie.github.io/2019/04/07/Analysis/">
 
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2019/03/28/Analysis/">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2019/04/07/Analysis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sally Xie">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-03-28T00:05:07+08:00">
-                2019-03-28
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-04-07T00:05:07+08:00">
+                2019-04-07
               </time>
             
 
@@ -342,7 +342,8 @@
       
 
       
-        
+        <h1 id="前言碎碎念"><a href="#前言碎碎念" class="headerlink" title="前言碎碎念"></a><strong>前言碎碎念</strong></h1><p>嗨溜，大家好！這學期習深度學習的課，老師要我們參加Kaggle競賽，如標題所言就是「預測地震」。而我假日興沖沖地去官網下載了資料，居然有將近10G啊…這種東西一下也搞不清楚在幹嘛，那就先來搞懂「預測規則」跟「分析資料集」比較實在啦～話不多說，趕快開始囉！</p>
+
       
     </div>
     
@@ -376,15 +377,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/03/28/CreateSubCategories/" rel="next" title="Hexo 建立「子分類」資料夾">
+                <i class="fa fa-chevron-left"></i> Hexo 建立「子分類」資料夾
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/28/HellWord/" rel="prev" title="HellWord">
-                HellWord <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -436,8 +437,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -497,6 +507,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言碎碎念"><span class="nav-number">1.</span> <span class="nav-text">前言碎碎念</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
