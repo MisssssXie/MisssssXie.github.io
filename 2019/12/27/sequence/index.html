@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Swift,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="先來碎個念最近專案需要做一些前後端做比對條件的功能，雖然可以用enum來解決，但我就是想使用看看OptionSet啦！而選擇OptionSet有很大原因是可以使用集合運算(union、intersection)，能較快速做出即時篩選運算。 本文重點會在介紹 Sequence 和 Iterator 概念，及如何實現一個Sequence。 What’s Sequence?是一堆同類型值得集合，且可使用">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift - 使OptionSet符合Sequence協議">
+<meta property="og:url" content="https://missxie.github.io/2019/12/27/sequence/index.html">
+<meta property="og:site_name" content="Xie&#39;s Blog">
+<meta property="og:description" content="先來碎個念最近專案需要做一些前後端做比對條件的功能，雖然可以用enum來解決，但我就是想使用看看OptionSet啦！而選擇OptionSet有很大原因是可以使用集合運算(union、intersection)，能較快速做出即時篩選運算。 本文重點會在介紹 Sequence 和 Iterator 概念，及如何實現一個Sequence。 What’s Sequence?是一堆同類型值得集合，且可使用">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2019-12-26T16:25:06.412Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift - 使OptionSet符合Sequence協議">
+<meta name="twitter:description" content="先來碎個念最近專案需要做一些前後端做比對條件的功能，雖然可以用enum來解決，但我就是想使用看看OptionSet啦！而選擇OptionSet有很大原因是可以使用集合運算(union、intersection)，能較快速做出即時篩選運算。 本文重點會在介紹 Sequence 和 Iterator 概念，及如何實現一個Sequence。 What’s Sequence?是一堆同類型值得集合，且可使用">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://missxie.github.io/2019/12/27/sequence/">
+
+
+
+
+
+  <title>Swift - 使OptionSet符合Sequence協議 | Xie's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xie's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">學習筆記本</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2019/12/27/sequence/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sally Xie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift - 使OptionSet符合Sequence協議</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-12-27T00:15:41+08:00">
+                2019-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="先來碎個念"><a href="#先來碎個念" class="headerlink" title="先來碎個念"></a>先來碎個念</h1><p>最近專案需要做一些前後端做比對條件的功能，雖然可以用enum來解決，但我就是想使用看看OptionSet啦！而選擇OptionSet有很大原因是可以使用集合運算(union、intersection)，能較快速做出即時篩選運算。</p>
+<p>本文重點會在介紹 Sequence 和 Iterator 概念，及如何實現一個Sequence。</p>
+<h1 id="What’s-Sequence"><a href="#What’s-Sequence" class="headerlink" title="What’s Sequence?"></a>What’s Sequence?</h1><p>是一堆同類型值得集合，且可使用迭代器(Iterator)擁有迭代的能力。</p>
+<p>而迭代一個序列集合最簡單的就是for-in循環，Array、Dictioanry、Set等結構體亦都實現了Sequence協議。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// for-in循環</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> items &#123;</span><br><span class="line">    <span class="built_in">print</span>(item)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Sequence-協議的定義"><a href="#Sequence-協議的定義" class="headerlink" title="Sequence 協議的定義"></a>Sequence 協議的定義</h1><p>如下，我們可以看到，擴展Sequence協議只有一個必須實現的方法，那就是makeIterator()，並返回Iterator，他符合IteratorProtocol協議。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">Sequence</span> </span>&#123; </span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Iterator</span>: <span class="type">IteratorProtocol</span> </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">makeIterator</span><span class="params">()</span></span> -&gt; <span class="type">Iterator</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<h3 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h3></blockquote>
+<p>Iterator在標準庫中即為IteratorProtocol，它用來為Sequence提供迭代能力。其for-in的背後是IteratorProtocol在起作用。</p>
+<blockquote>
+<h4 id="IteratorProtocol的定義"><a href="#IteratorProtocol的定義" class="headerlink" title="IteratorProtocol的定義"></a>IteratorProtocol的定義</h4><p>我們可以看到next()方法就是用來返回序列中下一個元素。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">protocol</span> <span class="title">IteratorProtocol</span> </span>&#123; </span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Element</span> </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">next</span><span class="params">()</span></span> -&gt; <span class="type">Self</span>.<span class="type">Element?</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<h4 id="舉個股票的例子"><a href="#舉個股票的例子" class="headerlink" title="舉個股票的例子"></a>舉個股票的例子</h4><p>建立一個股票清單，並對其作循環印出<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> stockList = [<span class="number">2330</span>, <span class="number">2337</span>, <span class="number">2310</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> id <span class="keyword">in</span> stockList &#123;</span><br><span class="line">    <span class="built_in">print</span>(id)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// print結果為：</span></span><br><span class="line"><span class="number">2330</span></span><br><span class="line"><span class="number">2337</span></span><br><span class="line"><span class="number">2310</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>那在編譯器中會被編譯成如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 取得數組的Iterator</span></span><br><span class="line"><span class="keyword">let</span> stockListIterator = stockListIterator.makeIterator()</span><br><span class="line"><span class="comment">// Iterator擁有迭代能力，可以不斷往下跑 </span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">let</span> id = stockListIterator.next() &#123; </span><br><span class="line">    <span class="built_in">print</span>(id) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="紀錄針對專案中OptionSet所擴展的Sequence"><a href="#紀錄針對專案中OptionSet所擴展的Sequence" class="headerlink" title="紀錄針對專案中OptionSet所擴展的Sequence"></a>紀錄針對專案中OptionSet所擴展的Sequence</h1><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">OptionSetIterator</span>&lt;<span class="title">Element</span>: <span class="title">OptionSet</span>&gt;: <span class="title">IteratorProtocol</span> <span class="title">where</span> <span class="title">Element</span>.<span class="title">RawValue</span> == <span class="title">Int</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">let</span> value: <span class="type">Element</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(element: <span class="type">Element</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.value = element</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 假設value就是整個 ContionOption = 255 (11111111)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">lazy</span> <span class="keyword">var</span> remainingBits = value.rawValue</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> bitMask = <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// Returns: The next element in the underlying sequence, if a next element exists; otherwise, `nil`.</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">next</span><span class="params">()</span></span> -&gt; <span class="type">Element?</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> remainingBits != <span class="number">0</span> &#123;</span><br><span class="line">            <span class="comment">// 每跑一次都位移一格都是2的次方</span></span><br><span class="line">            <span class="keyword">defer</span> &#123; bitMask = bitMask * <span class="number">2</span> &#125;</span><br><span class="line">            <span class="keyword">if</span> remainingBits &amp; bitMask != <span class="number">0</span> &#123;</span><br><span class="line">                remainingBits = remainingBits &amp; ~bitMask</span><br><span class="line">                </span><br><span class="line">                 <span class="comment">/** 註解</span></span><br><span class="line"><span class="comment">                 利用補數運算</span></span><br><span class="line"><span class="comment">                 let initialBits: UInt8 = 0b00001111</span></span><br><span class="line"><span class="comment">                 let invertedBits = ~initialBits  // 等於 0b11110000</span></span><br><span class="line"><span class="comment">                 第一次進入</span></span><br><span class="line"><span class="comment">                 11111111 &amp; 11111110 &gt;&gt;&gt; 11111110(254)</span></span><br><span class="line"><span class="comment">                 第二次進入</span></span><br><span class="line"><span class="comment">                 11111110 &amp; 11111100 &gt;&gt;&gt; 11111100(252)</span></span><br><span class="line"><span class="comment">                 當 remainingBits 變０就不繼續跑了</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">                </span><br><span class="line">                <span class="keyword">return</span> <span class="type">Element</span>(rawValue: bitMask)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 擴展Sequence協議只有一個必須實現的方法 makeIterator()</span></span><br><span class="line"><span class="comment">/// Returns an iterator over the elements of this sequence.</span></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">OptionSet</span> <span class="title">where</span> <span class="title">Self</span>.<span class="title">RawValue</span> == <span class="title">Int</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 原始為 func makeIterator() -&gt; Self.Iterator &gt;&gt;&gt; IteratorProtocol</span></span><br><span class="line">    <span class="comment">// 只要提供一個Iterator 就能實現一個Sequence</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">makeIterator</span><span class="params">()</span></span> -&gt; <span class="type">OptionSetIterator</span>&lt;<span class="type">Self</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">OptionSetIterator</span>(element: <span class="keyword">self</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="OptionSet-注意筆記"><a href="#OptionSet-注意筆記" class="headerlink" title="OptionSet 注意筆記"></a>OptionSet 注意筆記</h1><ul>
+<li>是個bitset types</li>
+<li>rawValue是位域底層的存儲單元，每個選項都應該是靜態的常量</li>
+<li>注意 ConditionOption 與 [ConditionOption] 的差別！<br>  ConditionOption背後代表一個值，[ConditionOption]這是一個Array並且擁有Sequence能力哦！</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 篩選條件</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ConditionOption</span>: <span class="title">OptionSet</span>, <span class="title">Sequence</span>, <span class="title">Codable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">typealias</span> <span class="type">RawValue</span> = <span class="type">Int</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> rawValue: <span class="type">Int</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">init</span>(rawValue: <span class="type">Int</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.rawValue = rawValue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/// 本益比&lt;15</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> pERatio = <span class="type">ConditionOption</span>(rawValue: <span class="number">1</span> &lt;&lt; <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 本益成長比&lt;1</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> pEGrowthRatio = <span class="type">ConditionOption</span>(rawValue: <span class="number">1</span> &lt;&lt; <span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 營收年增率</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> revenueYoY = <span class="type">ConditionOption</span>(rawValue: <span class="number">1</span> &lt;&lt; <span class="number">2</span>)</span><br><span class="line">   </span><br><span class="line">    <span class="comment">/// 近20日回落＞15%</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> twintyDayQuoteChange = <span class="type">ConditionOption</span>(rawValue: <span class="number">1</span> &lt;&lt; <span class="number">3</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// Beta＜1</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> beta = <span class="type">ConditionOption</span>(rawValue: <span class="number">1</span> &lt;&lt; <span class="number">4</span>)</span><br><span class="line">   </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 財報面 &gt;&gt;&gt; 這個不是 Array</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> financial: <span class="type">ConditionOption</span> = [.pERatio, .pEGrowthRatio]</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 技術面 &gt;&gt;&gt; 這個是 Array 類似enum</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> technail: [<span class="type">ConditionOption</span>] = [.twintyDayQuoteChange, .beta]</span><br></pre></td></tr></table></figure>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
+<li><a href="https://developer.apple.com/documentation/swift/iteratorprotocol" target="_blank" rel="noopener">https://developer.apple.com/documentation/swift/iteratorprotocol</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/08/boxing/" rel="next" title="C# Boxing(裝箱)和Unboxing(拆箱)">
+                <i class="fa fa-chevron-left"></i> C# Boxing(裝箱)和Unboxing(拆箱)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sally Xie</p>
+              <p class="site-description motion-element" itemprop="description">怕忘記，就學著做筆記。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#先來碎個念"><span class="nav-number">1.</span> <span class="nav-text">先來碎個念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What’s-Sequence"><span class="nav-number">2.</span> <span class="nav-text">What’s Sequence?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sequence-協議的定義"><span class="nav-number">3.</span> <span class="nav-text">Sequence 協議的定義</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterator"><span class="nav-number">3.0.1.</span> <span class="nav-text">Iterator</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IteratorProtocol的定義"><span class="nav-number">3.0.1.1.</span> <span class="nav-text">IteratorProtocol的定義</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#舉個股票的例子"><span class="nav-number">3.0.1.2.</span> <span class="nav-text">舉個股票的例子</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#紀錄針對專案中OptionSet所擴展的Sequence"><span class="nav-number">4.</span> <span class="nav-text">紀錄針對專案中OptionSet所擴展的Sequence</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OptionSet-注意筆記"><span class="nav-number">5.</span> <span class="nav-text">OptionSet 注意筆記</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#參考資料"><span class="nav-number">5.0.1.</span> <span class="nav-text">參考資料</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-id-card"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sally Xie</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
