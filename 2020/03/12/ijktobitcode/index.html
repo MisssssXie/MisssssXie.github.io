@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="BitcodeBitcode是LLVM編譯器將C/C++/OC/Swift等前端變成語言編譯成多種不同芯片上的機器指令過程中的中間代碼。支持Bitcode的優勢就是在提交store後，蘋果再動態生成相應CPU的APP版本，這樣每個版本的App就相對小了很多。 原因社群模組會因為 IJKMediaFramework這套三方本身沒有支持Bitcode導致Archive後，App整個檔案會大２倍。 目標">
+<meta name="description" content="BitcodeBitcode是LLVM編譯器將C/C++/OC/Swift等前端變成語言編譯成多種不同芯片上的機器指令過程中的中間代碼。支持Bitcode的優勢就是在提交store後，蘋果再動態生成相應CPU的APP版本，這樣每個版本的App就相對小了很多。 原因製作直播功能時會使用IJKMediaFramework這套三方，但他本身沒有支持Bitcode導致Archive後，App整個檔案會大２">
 <meta name="keywords" content="Swift,iOS,Xcode,IJKMediaFramework,Bitcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自行製作IJKMediaFramework並可支持Bitcode">
 <meta property="og:url" content="https://missxie.github.io/2020/03/12/ijktobitcode/index.html">
 <meta property="og:site_name" content="Xie&#39;s Blog">
-<meta property="og:description" content="BitcodeBitcode是LLVM編譯器將C/C++/OC/Swift等前端變成語言編譯成多種不同芯片上的機器指令過程中的中間代碼。支持Bitcode的優勢就是在提交store後，蘋果再動態生成相應CPU的APP版本，這樣每個版本的App就相對小了很多。 原因社群模組會因為 IJKMediaFramework這套三方本身沒有支持Bitcode導致Archive後，App整個檔案會大２倍。 目標">
+<meta property="og:description" content="BitcodeBitcode是LLVM編譯器將C/C++/OC/Swift等前端變成語言編譯成多種不同芯片上的機器指令過程中的中間代碼。支持Bitcode的優勢就是在提交store後，蘋果再動態生成相應CPU的APP版本，這樣每個版本的App就相對小了很多。 原因製作直播功能時會使用IJKMediaFramework這套三方，但他本身沒有支持Bitcode導致Archive後，App整個檔案會大２">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://missxie.github.io/images/ijk/123.png">
 <meta property="og:image" content="https://missxie.github.io/images/ijk/888.png">
@@ -101,10 +101,10 @@
 <meta property="og:image" content="https://missxie.github.io/images/ijk/555.png">
 <meta property="og:image" content="https://missxie.github.io/images/ijk/666.png">
 <meta property="og:image" content="https://missxie.github.io/images/ijk/777.png">
-<meta property="og:updated_time" content="2020-03-12T15:17:12.104Z">
+<meta property="og:updated_time" content="2020-03-12T15:20:00.028Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自行製作IJKMediaFramework並可支持Bitcode">
-<meta name="twitter:description" content="BitcodeBitcode是LLVM編譯器將C/C++/OC/Swift等前端變成語言編譯成多種不同芯片上的機器指令過程中的中間代碼。支持Bitcode的優勢就是在提交store後，蘋果再動態生成相應CPU的APP版本，這樣每個版本的App就相對小了很多。 原因社群模組會因為 IJKMediaFramework這套三方本身沒有支持Bitcode導致Archive後，App整個檔案會大２倍。 目標">
+<meta name="twitter:description" content="BitcodeBitcode是LLVM編譯器將C/C++/OC/Swift等前端變成語言編譯成多種不同芯片上的機器指令過程中的中間代碼。支持Bitcode的優勢就是在提交store後，蘋果再動態生成相應CPU的APP版本，這樣每個版本的App就相對小了很多。 原因製作直播功能時會使用IJKMediaFramework這套三方，但他本身沒有支持Bitcode導致Archive後，App整個檔案會大２">
 <meta name="twitter:image" content="https://missxie.github.io/images/ijk/123.png">
 
 
@@ -358,7 +358,7 @@
 
       
         <h2 id="Bitcode"><a href="#Bitcode" class="headerlink" title="Bitcode"></a>Bitcode</h2><p>Bitcode是LLVM編譯器將C/C++/OC/Swift等前端變成語言編譯成多種不同芯片上的機器指令過程中的中間代碼。<br>支持Bitcode的優勢就是在提交store後，蘋果再動態生成相應CPU的APP版本，這樣每個版本的App就相對小了很多。</p>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>社群模組會因為 IJKMediaFramework這套三方本身沒有支持Bitcode導致Archive後，App整個檔案會大２倍。</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>製作直播功能時會使用IJKMediaFramework這套三方，但他本身沒有支持Bitcode導致Archive後，App整個檔案會大２倍。</p>
 <h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>需要自行編譯 IJKMediaFramework。<br>因armv7在ijkplayer已不支援，若要自行編譯請確認App不支援IOS10以下，亦不支援iphone4S(含)以下。<br><a href="https://www.innerfence.com/howto/apple-ios-devices-dates-versions-instruction-sets" target="_blank" rel="noopener">iOS Devices:設備架構一覽表</a></p>
 <p><img src="/images/ijk/123.png" alt="圖案"></p>
 <h2 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h2><p>讓IJKMediaFramework支持Bitcode後，整個App減肥了<font color="#FF5856">２６.６MB</font>唷～<br><img src="/images/ijk/888.png" alt="圖案"></p>
