@@ -101,7 +101,7 @@
 <meta property="og:image" content="https://missxie.github.io/images/ijk/555.png">
 <meta property="og:image" content="https://missxie.github.io/images/ijk/666.png">
 <meta property="og:image" content="https://missxie.github.io/images/ijk/777.png">
-<meta property="og:updated_time" content="2020-03-12T15:23:02.070Z">
+<meta property="og:updated_time" content="2020-03-12T15:25:54.712Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自行製作IJKMediaFramework並可支持Bitcode">
 <meta name="twitter:description" content="BitcodeBitcode是LLVM編譯器將C/C++/OC/Swift等前端變成語言編譯成多種不同芯片上的機器指令過程中的中間代碼。支持Bitcode的優勢就是在提交store後，蘋果再動態生成相應CPU的APP版本，這樣每個版本的App就相對小了很多。 原因製作直播功能時會使用IJKMediaFramework這套三方，但他本身沒有支持Bitcode導致Archive後，App整個檔案會大２">
@@ -379,7 +379,8 @@
 <pre><code>lipo -create &quot;真機IJKMediaFramework路徑&quot; &quot;模擬器IJKMediaFramework路徑&quot;
 -output &quot;合併後的檔案路徑和名稱(LastPathComponent會預設為檔名字)&quot;
 </code></pre><p><img src="/images/ijk/5555.png" alt="圖案"></p>
-<p>將合成好的IJKMediaFramework檔案取代 Releaseiphones/IJKMediaFramework.framework/IJKMediaFramework檔案</p>
+<p>將合成好的IJKMediaFramework檔案取代</p>
+<p>Releaseiphones/IJKMediaFramework.framework/IJKMediaFramework檔案</p>
 <p>&nbsp; &nbsp;<img src="/images/ijk/555.png" alt="圖案"></p>
 <h4 id="6-合併完成後可查看IJKMediaFramework是否支持Bicode的方式"><a href="#6-合併完成後可查看IJKMediaFramework是否支持Bicode的方式" class="headerlink" title="6.合併完成後可查看IJKMediaFramework是否支持Bicode的方式"></a>6.合併完成後可查看<font color="#FF5856">IJKMediaFramework</font>是否支持<font color="#FF5856">Bicode</font>的方式</h4><p>Framework未合并 <br></p>
 <pre><code>otool -l IJKMediaFramework.framework/IJKMediaFramework
