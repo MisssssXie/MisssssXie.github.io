@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Swift,iOS,Xcode,CoreML,CreateML,Machine Learning,Deep Learning,情緒分析,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什麼是 Machine Learning？機器學習是一門人工智能的科學，通過對經驗、數據進行分析，最後得到一個或多個結果。白話一點就是：從歷史資料中找出規律，並且把這些規律套用到未來不確定的場景上。   所以機器學習的核心就是「使用資料解決問題」。  什麼是 Core ML？Core ML 是蘋果在 WWDC 2017 發表的機器學習框架 (Machine Learning Framework)，">
+<meta name="keywords" content="Swift,iOS,Xcode,CoreML,CreateML,Machine Learning,Deep Learning,情緒分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哇！玩玩NLP，使用 Core ML 抓出市場情緒？">
+<meta property="og:url" content="https://missxie.github.io/2020/03/26/coreML/index.html">
+<meta property="og:site_name" content="Xie&#39;s Blog">
+<meta property="og:description" content="什麼是 Machine Learning？機器學習是一門人工智能的科學，通過對經驗、數據進行分析，最後得到一個或多個結果。白話一點就是：從歷史資料中找出規律，並且把這些規律套用到未來不確定的場景上。   所以機器學習的核心就是「使用資料解決問題」。  什麼是 Core ML？Core ML 是蘋果在 WWDC 2017 發表的機器學習框架 (Machine Learning Framework)，">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://missxie.github.io/images/CoreML/a45286befd4a9b0a530e8e8c5a887ceb.png">
+<meta property="og:image" content="https://missxie.github.io/images/CoreML/4b0ecf58-a51a-4bfa-a361-eb77e59ed76e.png">
+<meta property="og:image" content="https://missxie.github.io/images/CoreML/d926fc62-3dea-4447-86fc-920d4d6c4781.png">
+<meta property="og:image" content="https://missxie.github.io/images/CoreML/111.png">
+<meta property="og:image" content="https://missxie.github.io/images/CoreML/222.png">
+<meta property="og:image" content="https://missxie.github.io/images/CoreML/333.png">
+<meta property="og:image" content="https://missxie.github.io/images/CoreML/IMG_0675.png">
+<meta property="og:updated_time" content="2020-03-26T09:16:30.672Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="哇！玩玩NLP，使用 Core ML 抓出市場情緒？">
+<meta name="twitter:description" content="什麼是 Machine Learning？機器學習是一門人工智能的科學，通過對經驗、數據進行分析，最後得到一個或多個結果。白話一點就是：從歷史資料中找出規律，並且把這些規律套用到未來不確定的場景上。   所以機器學習的核心就是「使用資料解決問題」。  什麼是 Core ML？Core ML 是蘋果在 WWDC 2017 發表的機器學習框架 (Machine Learning Framework)，">
+<meta name="twitter:image" content="https://missxie.github.io/images/CoreML/a45286befd4a9b0a530e8e8c5a887ceb.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://missxie.github.io/2020/03/26/coreML/">
+
+
+
+
+
+  <title>哇！玩玩NLP，使用 Core ML 抓出市場情緒？ | Xie's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xie's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">學習筆記本</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2020/03/26/coreML/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sally Xie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">哇！玩玩NLP，使用 Core ML 抓出市場情緒？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-03-26T17:07:13+08:00">
+                2020-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什麼是-Machine-Learning？"><a href="#什麼是-Machine-Learning？" class="headerlink" title="什麼是 Machine Learning？"></a>什麼是 Machine Learning？</h2><p>機器學習是一門人工智能的科學，通過對經驗、數據進行分析，最後得到一個或多個結果。<br>白話一點就是：從歷史資料中找出規律，並且把這些規律套用到未來不確定的場景上。   所以機器學習的核心就是「使用資料解決問題」。</p>
+<p><img src="/images/CoreML/a45286befd4a9b0a530e8e8c5a887ceb.png" alt="圖案"></p>
+<h2 id="什麼是-Core-ML？"><a href="#什麼是-Core-ML？" class="headerlink" title="什麼是 Core ML？"></a>什麼是 Core ML？</h2><p>Core ML 是蘋果在 WWDC 2017 發表的機器學習框架 (Machine Learning Framework)，開發人員可以藉由 Core ML 的輔助，使開發者更專注於模型的使用而不是將大量的時間糾結在模型的訓練和演算法上，快速將已完成訓練的機器學習模型 (model) 整合進 App 中，讓 App 也能具備人工智慧的學習及預測能力。(真是蘋果一貫不開源的作風，你永遠不知道它裡面到底做了什麼！）</p>
+<p><img src="/images/CoreML/4b0ecf58-a51a-4bfa-a361-eb77e59ed76e.png" alt="圖案"></p>
+<h2 id="想要自己訓練模型？用-Create-ML"><a href="#想要自己訓練模型？用-Create-ML" class="headerlink" title="想要自己訓練模型？用 Create ML !"></a>想要自己訓練模型？用 Create ML !</h2><p>Core ML 讓你以最少的程式碼迅速將預先訓練好的機器學習模型導入App內，但發現蘋果給我們的model型別真的是太少了，而且有的還不準咧！<br>所以現在將可透過Create ML 這項工具，讓開發人員有能力透過 Xcode Playground 建立自己的機器學習模型，只需要一些數據就可以進行訓練了！YA！但請注意，環境須為 iOS 12 或 macOS Mojave以上。</p>
+<p><img src="/images/CoreML/d926fc62-3dea-4447-86fc-920d4d6c4781.png" alt="圖案"></p>
+<h2 id="什麼是-NLP"><a href="#什麼是-NLP" class="headerlink" title="什麼是 NLP ?"></a>什麼是 NLP ?</h2><p>透過分析語言文本讓電腦擁有理解人類語言的能力，就是自然語言處理 (Natural Language Processing，縮寫 NLP)。</p>
+<h2 id="Let’s-start-training-NLP！"><a href="#Let’s-start-training-NLP！" class="headerlink" title="Let’s start training NLP！"></a>Let’s start training NLP！</h2><h3 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h3><p>由於我們是屬於金融市場，必須自己建造符合金融市場的模型，所以使用Create ML、Xcode Playground 和 Swift 在Mac上進行機器學習。之後將在App內使用經過訓練的模型，並告訴我今天股票市場的情緒是樂觀的還是悲觀的。</p>
+<h3 id="資料搜集及預處理"><a href="#資料搜集及預處理" class="headerlink" title="資料搜集及預處理"></a>資料搜集及預處理</h3><ol>
+<li>使用CMoney官網的股票爆料同學會「加權指數」的所有留言，約29000筆。</li>
+<li>過濾留言總字數，超過50個字的不納入訓練資料。</li>
+<li>將所有留言標上標籤(Label)，目前為練習用，所以先標100筆。</li>
+</ol>
+<h3 id="使用Create-ML"><a href="#使用Create-ML" class="headerlink" title="使用Create ML"></a>使用Create ML</h3><p>Create ML可以處理來自JSON或CSV文件以及帶有標籤的文件夾結構的訓練文本數據。</p>
+<ul>
+<li>開啟 Xcode, File → New → Playground → macOS → Blank. Click Next.</li>
+<li>Give it a suitable name and click Create.</li>
+</ul>
+<h2 id="文字分類器模型"><a href="#文字分類器模型" class="headerlink" title="文字分類器模型"></a>文字分類器模型</h2><h3 id="使用CSV"><a href="#使用CSV" class="headerlink" title="使用CSV"></a>使用CSV</h3><ul>
+<li>訓練數據包括來自CMoney官網的股票爆料同學會「加權指數」的留言及其相應的情感標籤。</li>
+<li>設置ㄧ個MLDataTable實例：一個訓練數據表，其中包含訓練數據集的內容；以及測試數據表，其中包含用於測試訓練後的分類器的數據。</li>
+<li>使用內建 MLTextClassifier，並定義數據的什麼數值是文本、什麼數值是標籤。</li>
+</ul>
+<h3 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> CreateML</span><br><span class="line"><span class="keyword">import</span> CreateMLUI</span><br><span class="line"><span class="keyword">import</span> Foundation</span><br><span class="line"></span><br><span class="line"><span class="comment">// 載入CSV</span></span><br><span class="line"><span class="keyword">let</span> data = <span class="keyword">try</span> <span class="type">MLDataTable</span>(contentsOf: <span class="type">URL</span>(fileURLWithPath: <span class="string">"/Path/XXX.csv"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將數據用比例拆分成 訓練數據以及測試數據</span></span><br><span class="line"><span class="keyword">let</span> (trainingData, testingData) = data.randomSplit(by: <span class="number">0.8</span>, seed: <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 開始訓練，MLTextClassifier 定義數據的什麼數值是文本、什麼數值是標籤</span></span><br><span class="line"><span class="keyword">let</span> sentimentClassifier = <span class="keyword">try</span> <span class="type">MLTextClassifier</span>(trainingData: trainingData, textColumn: <span class="string">"content"</span>, labelColumn: <span class="string">"label"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用於確定分類器的準確率</span></span><br><span class="line"><span class="comment">// 在訓練期間，Create ML會保留一小部分訓練數據，以用於在訓練階段驗證模型的進度。</span></span><br><span class="line"><span class="comment">// 驗證數據允許訓練過程在尚未訓練模型的示例上評估模型的性能。</span></span><br><span class="line"><span class="comment">// 根據驗證的準確性，如果準確性足夠高，則訓練算法可以調整模型中的值，甚至停止訓練過程。</span></span><br><span class="line"><span class="comment">// 由於拆分是隨機進行的，因此每次訓練模型時可能會得到不同的結果。</span></span><br><span class="line"><span class="keyword">let</span> trainingAccuracy = (<span class="number">1.0</span> - sentimentClassifier.trainingMetrics.classificationError) * <span class="number">100</span></span><br><span class="line"><span class="keyword">let</span> validationAccuracy = (<span class="number">1.0</span> - sentimentClassifier.validationMetrics.classificationError) * <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 評估分類器的準確性，Evaluation 是分類器分類未接觸過的文字的準確度</span></span><br><span class="line"><span class="keyword">let</span> evaluationMetrics = sentimentClassifier(on: testingData, textColumn: <span class="string">"content"</span>, labelColumn: <span class="string">"label"</span>)</span><br><span class="line"><span class="keyword">let</span> evaluationAccuracy = (<span class="number">1.0</span> - evaluationMetrics.classificationError) * <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 為 ML 模型創建一些元數據給作者、描述和版本等。使用 write() 函數，將模型保存到我們選擇的位置</span></span><br><span class="line"><span class="keyword">let</span> metadata = <span class="type">MLModelMetadata</span>(author: <span class="string">"sally"</span>, shortDescription: <span class="string">"A model trained to classify sentiment"</span>, version: <span class="string">"1.0"</span>)</span><br><span class="line"><span class="keyword">try</span> sentimentClassifier.write(to: <span class="type">URL</span>(fileURLWithPath: <span class="string">"Path/sentimentClassifier.mlmodel"</span>), metadata: metadata)</span><br></pre></td></tr></table></figure>
+<h3 id="ML模型"><a href="#ML模型" class="headerlink" title="ML模型"></a>ML模型</h3><p><img src="/images/CoreML/111.png" alt="圖案"></p>
+<h3 id="ML模型加進我的App裡"><a href="#ML模型加進我的App裡" class="headerlink" title="ML模型加進我的App裡"></a>ML模型加進我的App裡</h3><ol>
+<li>將sentimentClassifier.mlmodel拉近Xcode。</li>
+<li><img src="/images/CoreML/222.png" alt="圖案"></li>
+<li><img src="/images/CoreML/333.png" alt="圖案"></li>
+<li>透過 predictedLabel(for:) 實例方法獲得預測，該方法可能返回訓練數據中使用的情感標籤之一。</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pos = <span class="number">0</span></span><br><span class="line">   <span class="keyword">var</span> neg = <span class="number">0</span></span><br><span class="line">   <span class="keyword">var</span> other = <span class="number">0</span></span><br><span class="line">   <span class="keyword">for</span> data <span class="keyword">in</span> articleList &#123;</span><br><span class="line">       <span class="keyword">if</span> #available(iOS <span class="number">12.0</span>, *) &#123;</span><br><span class="line">           <span class="keyword">if</span> <span class="keyword">let</span> label = classifier?.predictedLabel(<span class="keyword">for</span>: data.<span class="type">Content</span>) &#123;</span><br><span class="line">               <span class="keyword">switch</span> label &#123;</span><br><span class="line">               <span class="keyword">case</span> <span class="string">"漲"</span>:</span><br><span class="line">                   pos += <span class="number">1</span></span><br><span class="line">               <span class="keyword">case</span> <span class="string">"跌"</span>:</span><br><span class="line">                   neg += <span class="number">1</span></span><br><span class="line">               <span class="keyword">default</span>:</span><br><span class="line">                   other += <span class="number">1</span></span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">  <span class="keyword">let</span> result = pos &gt; neg ? <span class="string">"買起來~🤗🤗🤗"</span> : (neg &gt; other ? <span class="string">"怎辦好慌慌😰😰😰"</span> : <span class="string">"盤整要人命~😪😪😪"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/CoreML/IMG_0675.png" width="375" height="675" alt="图片" align="center"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/Xcode/" rel="tag"># Xcode</a>
+          
+            <a href="/tags/CoreML/" rel="tag"># CoreML</a>
+          
+            <a href="/tags/CreateML/" rel="tag"># CreateML</a>
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+            <a href="/tags/情緒分析/" rel="tag"># 情緒分析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/12/ijktobitcode/" rel="next" title="自行製作IJKMediaFramework並可支持Bitcode">
+                <i class="fa fa-chevron-left"></i> 自行製作IJKMediaFramework並可支持Bitcode
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sally Xie</p>
+              <p class="site-description motion-element" itemprop="description">怕忘記，就學著做筆記。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼是-Machine-Learning？"><span class="nav-number">1.</span> <span class="nav-text">什麼是 Machine Learning？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼是-Core-ML？"><span class="nav-number">2.</span> <span class="nav-text">什麼是 Core ML？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#想要自己訓練模型？用-Create-ML"><span class="nav-number">3.</span> <span class="nav-text">想要自己訓練模型？用 Create ML !</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼是-NLP"><span class="nav-number">4.</span> <span class="nav-text">什麼是 NLP ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Let’s-start-training-NLP！"><span class="nav-number">5.</span> <span class="nav-text">Let’s start training NLP！</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目標"><span class="nav-number">5.1.</span> <span class="nav-text">目標</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#資料搜集及預處理"><span class="nav-number">5.2.</span> <span class="nav-text">資料搜集及預處理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Create-ML"><span class="nav-number">5.3.</span> <span class="nav-text">使用Create ML</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文字分類器模型"><span class="nav-number">6.</span> <span class="nav-text">文字分類器模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用CSV"><span class="nav-number">6.1.</span> <span class="nav-text">使用CSV</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程式碼"><span class="nav-number">6.2.</span> <span class="nav-text">程式碼</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ML模型"><span class="nav-number">6.3.</span> <span class="nav-text">ML模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ML模型加進我的App裡"><span class="nav-number">6.4.</span> <span class="nav-text">ML模型加進我的App裡</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-id-card"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sally Xie</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
