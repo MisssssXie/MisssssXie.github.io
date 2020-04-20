@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Swift,iOS,Xcode,MCV,MVP,MVVM,DesignPattern,">
 
 
 
@@ -79,21 +79,22 @@
 
 
 
-<meta name="description" content="title: iOS - MVC/MVP/MVVM 到底差在哪裡？date: 2020-04-19 23:07:13categories:   Swifttags: Swift  iOS Xcode  MCV MVP MVVM DesignPattern  蝦蝦碎碎念以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應">
+<meta name="description" content="蝦蝦碎碎念以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應用，當然小專案也可以只使用MVC即可，端看適合與不適合。 MV-X 基本要素 M = Models ：資料訪問／擁有層。   V = Views ： User會看到的畫面。   C / P / VM = Controller/Prensenter/ViewMo">
+<meta name="keywords" content="Swift,iOS,Xcode,MCV,MVP,MVVM,DesignPattern">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Xie&#39;s Blog">
+<meta property="og:title" content="iOS - MVC&#x2F;MVP&#x2F;MVVM 到底差在哪裡？">
 <meta property="og:url" content="https://missxie.github.io/2020/04/20/designPattern/index.html">
 <meta property="og:site_name" content="Xie&#39;s Blog">
-<meta property="og:description" content="title: iOS - MVC/MVP/MVVM 到底差在哪裡？date: 2020-04-19 23:07:13categories:   Swifttags: Swift  iOS Xcode  MCV MVP MVVM DesignPattern  蝦蝦碎碎念以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應">
+<meta property="og:description" content="蝦蝦碎碎念以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應用，當然小專案也可以只使用MVC即可，端看適合與不適合。 MV-X 基本要素 M = Models ：資料訪問／擁有層。   V = Views ： User會看到的畫面。   C / P / VM = Controller/Prensenter/ViewMo">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://missxie.github.io/images/MVC/mvc.png">
 <meta property="og:image" content="https://missxie.github.io/images/MVC/mvc1.png">
 <meta property="og:image" content="https://missxie.github.io/images/MVC/MVP.png">
 <meta property="og:image" content="https://missxie.github.io/images/MVC/mvvm.png">
-<meta property="og:updated_time" content="2020-04-20T15:48:23.038Z">
+<meta property="og:updated_time" content="2020-04-20T15:51:24.795Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xie&#39;s Blog">
-<meta name="twitter:description" content="title: iOS - MVC/MVP/MVVM 到底差在哪裡？date: 2020-04-19 23:07:13categories:   Swifttags: Swift  iOS Xcode  MCV MVP MVVM DesignPattern  蝦蝦碎碎念以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應">
+<meta name="twitter:title" content="iOS - MVC&#x2F;MVP&#x2F;MVVM 到底差在哪裡？">
+<meta name="twitter:description" content="蝦蝦碎碎念以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應用，當然小專案也可以只使用MVC即可，端看適合與不適合。 MV-X 基本要素 M = Models ：資料訪問／擁有層。   V = Views ： User會看到的畫面。   C / P / VM = Controller/Prensenter/ViewMo">
 <meta name="twitter:image" content="https://missxie.github.io/images/MVC/mvc.png">
 
 
@@ -130,7 +131,7 @@
 
 
 
-  <title> | Xie's Blog</title>
+  <title>iOS - MVC/MVP/MVVM 到底差在哪裡？ | Xie's Blog</title>
   
 
 
@@ -274,7 +275,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">iOS - MVC/MVP/MVVM 到底差在哪裡？</h1>
         
 
         <div class="post-meta">
@@ -286,7 +287,7 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-04-20T20:30:10+08:00">
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-04-20T23:07:13+08:00">
                 2020-04-20
               </time>
             
@@ -296,6 +297,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -324,23 +347,21 @@
       
 
       
-        <hr>
-<p>title: iOS - MVC/MVP/MVVM 到底差在哪裡？<br>date: 2020-04-19 23:07:13<br>categories: </p>
-<ul>
-<li>Swift<br>tags:</li>
-<li>Swift </li>
-<li>iOS</li>
-<li>Xcode </li>
-<li>MCV</li>
-<li>MVP</li>
-<li>MVVM</li>
-<li>DesignPattern</li>
-</ul>
-<h2 id="蝦蝦碎碎念"><a href="#蝦蝦碎碎念" class="headerlink" title="蝦蝦碎碎念"></a>蝦蝦碎碎念</h2><p>以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應用，當然小專案也可以只使用MVC即可，端看適合與不適合。</p>
-<h2 id="MV-X-基本要素"><a href="#MV-X-基本要素" class="headerlink" title="MV-X 基本要素"></a>MV-X 基本要素</h2><p>M = Models ：資料訪問／擁有層。</p>
+        <h2 id="蝦蝦碎碎念"><a href="#蝦蝦碎碎念" class="headerlink" title="蝦蝦碎碎念"></a>蝦蝦碎碎念</h2><p>以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應用，當然小專案也可以只使用MVC即可，端看適合與不適合。</p>
+<h2 id="MV-X-基本要素"><a href="#MV-X-基本要素" class="headerlink" title="MV-X 基本要素"></a>MV-X 基本要素</h2><blockquote>
+<p>M = Models ：資料訪問／擁有層。</p>
+</blockquote>
+<blockquote>
 <p>V = Views ： User會看到的畫面。</p>
+</blockquote>
+<blockquote>
 <p>C / P / VM = Controller/Prensenter/ViewModel：他們三者都代表著View與Model的橋樑，專放業務邏輯。    </p>
+</blockquote>
+<blockquote>
+<blockquote>
 <p>一般來說用於處理使用者在View的操作後經過此橋樑可和Model進行資料傳輸。而Model模型資料變更後，經過此橋樑更新View上的圖形展示。</p>
+</blockquote>
+</blockquote>
 <h3 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h3><p><img src="/images/MVC/mvc.png" alt="圖案"></p>
 <p>此為一般MVC正常架構，當使用者點選當前視窗View的控制元件 -&gt; 將點選事件傳遞到Controller中 -&gt; Controller處理後更新Model -&gt; Model通知Controller更新結束 -&gt; Controller根據結果更新當前視窗View。</p>
 <p>但在iOS上卻是這樣的。</p>
@@ -379,6 +400,24 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/Xcode/" rel="tag"># Xcode</a>
+          
+            <a href="/tags/MCV/" rel="tag"># MCV</a>
+          
+            <a href="/tags/MVP/" rel="tag"># MVP</a>
+          
+            <a href="/tags/MVVM/" rel="tag"># MVVM</a>
+          
+            <a href="/tags/DesignPattern/" rel="tag"># DesignPattern</a>
+          
+        </div>
       
 
       
@@ -496,7 +535,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
