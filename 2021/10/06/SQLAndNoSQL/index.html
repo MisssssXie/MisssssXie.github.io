@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Swift,iOS,Xcode,MCV,MVP,MVVM,DesignPattern,">
+  <meta name="keywords" content="SQL,NoSQL,Graph,">
 
 
 
@@ -79,23 +79,18 @@
 
 
 
-<meta name="description" content="蝦蝦碎碎念以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應用，當然小專案也可以只使用MVC即可，端看適合與不適合。 MV-X 基本要素 M = Models ：資料訪問／擁有層。   V = Views ： User會看到的畫面。   C / P / VM = Controller/Prensenter/ViewMo">
-<meta name="keywords" content="Swift,iOS,Xcode,MCV,MVP,MVVM,DesignPattern">
+<meta name="description" content="資料模型與查詢語言 資料模型 Relational Document Graph    資料庫類別   類別 模型 簡介 特性 使用時機     SQL 關聯式模型 關聯式資料庫(Relational Database)   以其中關係(Table) 被組織起來，每個關係都是元組(tuples，指的是資料列row)的無序組合 1. 關聯式資料庫，兩個以上的資料表可以產生關聯性。2. 建立的資料表，">
+<meta name="keywords" content="SQL,NoSQL,Graph">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS - MVC&#x2F;MVP&#x2F;MVVM 到底差在哪裡？">
-<meta property="og:url" content="https://missxie.github.io/2020/04/20/designPattern/index.html">
+<meta property="og:title" content="資料模型概述">
+<meta property="og:url" content="https://missxie.github.io/2021/10/06/SQLAndNoSQL/index.html">
 <meta property="og:site_name" content="Xie&#39;s Blog">
-<meta property="og:description" content="蝦蝦碎碎念以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應用，當然小專案也可以只使用MVC即可，端看適合與不適合。 MV-X 基本要素 M = Models ：資料訪問／擁有層。   V = Views ： User會看到的畫面。   C / P / VM = Controller/Prensenter/ViewMo">
+<meta property="og:description" content="資料模型與查詢語言 資料模型 Relational Document Graph    資料庫類別   類別 模型 簡介 特性 使用時機     SQL 關聯式模型 關聯式資料庫(Relational Database)   以其中關係(Table) 被組織起來，每個關係都是元組(tuples，指的是資料列row)的無序組合 1. 關聯式資料庫，兩個以上的資料表可以產生關聯性。2. 建立的資料表，">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:image" content="https://missxie.github.io/images/MVC/mvc.png">
-<meta property="og:image" content="https://missxie.github.io/images/MVC/mvc1.png">
-<meta property="og:image" content="https://missxie.github.io/images/MVC/MVP.png">
-<meta property="og:image" content="https://missxie.github.io/images/MVC/mvvm.png">
-<meta property="og:updated_time" content="2020-04-21T01:14:00.016Z">
+<meta property="og:updated_time" content="2021-10-06T15:10:36.110Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS - MVC&#x2F;MVP&#x2F;MVVM 到底差在哪裡？">
-<meta name="twitter:description" content="蝦蝦碎碎念以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應用，當然小專案也可以只使用MVC即可，端看適合與不適合。 MV-X 基本要素 M = Models ：資料訪問／擁有層。   V = Views ： User會看到的畫面。   C / P / VM = Controller/Prensenter/ViewMo">
-<meta name="twitter:image" content="https://missxie.github.io/images/MVC/mvc.png">
+<meta name="twitter:title" content="資料模型概述">
+<meta name="twitter:description" content="資料模型與查詢語言 資料模型 Relational Document Graph    資料庫類別   類別 模型 簡介 特性 使用時機     SQL 關聯式模型 關聯式資料庫(Relational Database)   以其中關係(Table) 被組織起來，每個關係都是元組(tuples，指的是資料列row)的無序組合 1. 關聯式資料庫，兩個以上的資料表可以產生關聯性。2. 建立的資料表，">
 
 
 
@@ -125,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://missxie.github.io/2020/04/20/designPattern/">
+  <link rel="canonical" href="https://missxie.github.io/2021/10/06/SQLAndNoSQL/">
 
 
 
 
 
-  <title>iOS - MVC/MVP/MVVM 到底差在哪裡？ | Xie's Blog</title>
+  <title>資料模型概述 | Xie's Blog</title>
   
 
 
@@ -258,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2020/04/20/designPattern/">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2021/10/06/SQLAndNoSQL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sally Xie">
@@ -275,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">iOS - MVC/MVP/MVVM 到底差在哪裡？</h1>
+          <h1 class="post-title" itemprop="name headline">資料模型概述</h1>
         
 
         <div class="post-meta">
@@ -287,8 +282,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-04-20T23:07:13+08:00">
-                2020-04-20
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-10-06T23:05:22+08:00">
+                2021-10-06
               </time>
             
 
@@ -310,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/" itemprop="url" rel="index">
-                    <span itemprop="name">Swift</span>
+                  <a href="/categories/Database/" itemprop="url" rel="index">
+                    <span itemprop="name">Database</span>
                   </a>
                 </span>
 
@@ -347,42 +342,54 @@
       
 
       
-        <h2 id="蝦蝦碎碎念"><a href="#蝦蝦碎碎念" class="headerlink" title="蝦蝦碎碎念"></a>蝦蝦碎碎念</h2><p>以前覺得寫MVC就好了啊！幹嘛又分一堆架構？後來開發較大型的專案後發現MVP/MVVM程式碼量雖多，但勝在框架分工明確便於除錯及應用，當然小專案也可以只使用MVC即可，端看適合與不適合。</p>
-<h2 id="MV-X-基本要素"><a href="#MV-X-基本要素" class="headerlink" title="MV-X 基本要素"></a>MV-X 基本要素</h2><blockquote>
-<p>M = Models ：資料訪問／擁有層。</p>
-</blockquote>
-<blockquote>
-<p>V = Views ： User會看到的畫面。</p>
-</blockquote>
-<blockquote>
-<p>C / P / VM = Controller/Prensenter/ViewModel：他們三者都代表著View與Model的橋樑，專放業務邏輯。    </p>
-</blockquote>
-<p>一般來說用於處理使用者在View的操作後經過此橋樑可和Model進行資料傳輸。而Model模型資料變更後，經過此橋樑更新View上的圖形展示。</p>
-<h1 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h1><p><img src="/images/MVC/mvc.png" alt="圖案"></p>
-<p>此為一般MVC正常架構，當使用者點選當前視窗View的控制元件 -&gt; 將點選事件傳遞到Controller中 -&gt; Controller處理後更新Model -&gt; Model通知Controller更新結束 -&gt; Controller根據結果更新當前視窗View。</p>
-<p>但在iOS上卻是這樣的。</p>
-<p><img src="/images/MVC/mvc1.png" alt="圖案"></p>
-<p>沒錯！MVC中的View 跟 Controller 結合變成 ViewController了！這兩個被綁在一起，ViewController本身成為了所有東西的代理以及資料來源，包括傳送、取消網路請求、通知頁面、模型資料更改等，且所有通信都是單向的。</p>
-<p>這樣ViewController只會越來越肥大，白話一點講就是所有的程式碼都塞在這個檔案裡了，說好的職責分明呢？，所以我們發展出了MVP / MVVM 等架構，讓iOS也能夠職責分明。</p>
-<h1 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h1><p><img src="/images/MVC/MVP.png" alt="圖案"></p>
-<p>這圖乍看之下怎麼和MVC長得很像? 確實差不多，但MVP中加入了一個全新的概念Prensenter，用於取代Controller的位置作為”橋樑”，而原來的Controller將和View一起被統一視作View囉。這樣就不會像MVC模式中的ViewController整坨喇再一起了！讓Presenter來充當Controller原來的角色處理業務。並且因為Presenter獨立在外的原因，所以Presenter本身與當前的ViewController中的生命週期並無關聯。</p>
-<p>是一個真正的做到了Model作為資料訪問層，View作為圖形展示層，Presenter(Controller)作為業務處理層三者互相獨立的框架模式。<br>但卻有兩個缺點</p>
-<ol>
-<li><p>View不靈活：</p>
-<p> 主要就是Presenter沒有直接參與到檢視的生命週期中，卻又有任務要透過Model又通知Presenter 讓view更新，所以說Presenter是被動執行的，需要時才改變，不需要時就不會動作。</p>
+        <h2 id="資料模型與查詢語言"><a href="#資料模型與查詢語言" class="headerlink" title="資料模型與查詢語言"></a>資料模型與查詢語言</h2><ul>
+<li>資料模型<ul>
+<li>Relational</li>
+<li>Document</li>
+<li>Graph</li>
+</ul>
 </li>
-<li><p>程式碼變多</p>
-<p> 因Presenter是個橋樑而且又很被動，所以必須多寫一些介面當作資料傳遞，因此會多了一些程式碼。</p>
-</li>
+</ul>
+<h2 id="資料庫類別"><a href="#資料庫類別" class="headerlink" title="資料庫類別"></a>資料庫類別</h2><table>
+<thead>
+<tr>
+<th>類別</th>
+<th>模型</th>
+<th>簡介</th>
+<th>特性</th>
+<th>使用時機</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SQL</td>
+<td>關聯式模型</td>
+<td>關聯式資料庫(Relational Database) <br> <br> 以其中關係(Table) 被組織起來，每個關係都是元組(tuples，指的是資料列row)的無序組合</td>
+<td>1. 關聯式資料庫，兩個以上的資料表可以產生關聯性。<br><br>2. 建立的資料表，欄位就不能變動。<br><br>3. 可以複雜的查詢。<br><br>4. 儲存重要資料，例如會員資料、訂單資料、交易資料等。<br><br>5. 擴充能力弱、成本高。</td>
+<td>1. 資料與資料之間有關聯性.<br><br> 2. 需要複雜的查詢</td>
+</tr>
+<tr>
+<td>NoSQL</td>
+<td>非關聯式模型</td>
+<td>文件資料庫（Document Database）以文件的形式儲存。<br>每個文件都是自包含的資料單元，是一系列資料項的集合。<br>每個資料項都有一個名稱與對應的值。<br><br>圖形資料庫（Graph Database) 將資料以圖的方式儲存。<br>實體會被作為頂點，而實體之間的關係則會被作為邊。<br>比如我們有三個實體，Steve Jobs、Apple和Next，則會有兩個“Founded by”的邊將Apple和Next連線到Steve Jobs。</td>
+<td>1. 非關聯式資料庫，處理速度快。<br><br> 2. 可依需求隨時增加或減少，橫向擴充能力強、成本低  <br><br> 3. 儲存單純、無關聯的。<br><br>  4. 超大規模資料儲存，抓取局部性資料強，更具動態性和表達力</td>
+<td>1. 資料量大 <br><br>2. 單純的資料、無關聯 <br><br>3. 在不清楚資料結構的時候</td>
+</tr>
+</tbody>
+</table>
+<h2 id="討論串"><a href="#討論串" class="headerlink" title="討論串"></a>討論串</h2><ul>
+<li>請舉例目前在專案中使用NoSQL、SQL的情境？ </li>
+<li>上述提到的情境是否會想換成NoSQL or SQL? 如果是，為什麼？ (如果原本是用SQL會不會想換成NoSQL)</li>
+<li>覺得哪一種應用場景下特別適合圖模型(Graph Database) ？ 為什麼？</li>
+<li>除了以上提到的資料特性，還有哪些特性是用哪種模型呢？</li>
+<li>NoSQL除了文件資料庫、圖形資料庫還有哪些資料庫？請舉例並說明差異。</li>
+<li>SQL &amp; NoSQL是否可以共存？請舉例。</li>
+<li>GraphQL v.s. REST API</li>
+</ul>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ol>
+<li><a href="https://www.itread01.com/content/1549348208.html" target="_blank" rel="noopener">Nosql資料庫的分類及應用場景</a></li>
+<li><a href="https://doublekk2058.notion.site/Graph-Like-2191c827caf84ae881df9421e55c488d" target="_blank" rel="noopener">Graph-Like資料模型</a></li>
 </ol>
-<p>白話講：當資料變動時，Model 告訴 Presenter 說資料更新完囉 ～ Presenter 再去叫vieｗ更新。</p>
-<h1 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h1><p><img src="/images/MVC/mvvm.png" alt="圖案"></p>
-<p>這圖看了一下，怎麼又和MVP好像？只是多了一個Binding的動作？沒錯！剛剛被動的MVP變成主動的MVVM囉！MVVM有著自動Data Binding的能力，也就是說透過View Model與View的繫結，解決了資料與檢視同步的問題。</p>
-<p>View Model 是View和Model之間的橋樑，View Model根據Model的變化進行調整，並利用Binding同時調整View。</p>
-<p>白話講：當資料變動時，頁面會根據變動資料自動調整，根本人工智慧。</p>
-<p>但可惜的是iOS目前要實現Binding功能較為困難，必須使用KVO觀察或是ReactiveCocoa上手較為困難。</p>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>綜合以上，目前我還是選擇MVP為首要開發框架，當然小專案也可以只使用MVC啦！有時候殺雞不用牛刀喔～我其實也蠻常混用的！期待未來Apple努力發展簡單版的Data Binding那我們就可以來試試MVVM囉！</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a href="https://codertw.com/ios/62072/" target="_blank" rel="noopener">淺談 MVC、MVP 和 MVVM 架構模式</a><br><a href="https://www.itread01.com/content/1541412252.html" target="_blank" rel="noopener">MVC、MVP、MVVM 隨筆</a></p>
 
       
     </div>
@@ -400,19 +407,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Swift/" rel="tag"># Swift</a>
+            <a href="/tags/SQL/" rel="tag"># SQL</a>
           
-            <a href="/tags/iOS/" rel="tag"># iOS</a>
+            <a href="/tags/NoSQL/" rel="tag"># NoSQL</a>
           
-            <a href="/tags/Xcode/" rel="tag"># Xcode</a>
-          
-            <a href="/tags/MCV/" rel="tag"># MCV</a>
-          
-            <a href="/tags/MVP/" rel="tag"># MVP</a>
-          
-            <a href="/tags/MVVM/" rel="tag"># MVVM</a>
-          
-            <a href="/tags/DesignPattern/" rel="tag"># DesignPattern</a>
+            <a href="/tags/Graph/" rel="tag"># Graph</a>
           
         </div>
       
@@ -425,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/26/coreML/" rel="next" title="哇！玩玩NLP，使用 Core ML 抓出市場情緒？">
-                <i class="fa fa-chevron-left"></i> 哇！玩玩NLP，使用 Core ML 抓出市場情緒？
+              <a href="/2020/04/20/designPattern/" rel="next" title="iOS - MVC/MVP/MVVM 到底差在哪裡？">
+                <i class="fa fa-chevron-left"></i> iOS - MVC/MVP/MVVM 到底差在哪裡？
               </a>
             
           </div>
@@ -434,10 +433,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/10/06/SQLAndNoSQL/" rel="prev" title="資料模型概述">
-                資料模型概述 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -569,7 +564,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#蝦蝦碎碎念"><span class="nav-number">1.</span> <span class="nav-text">蝦蝦碎碎念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MV-X-基本要素"><span class="nav-number">2.</span> <span class="nav-text">MV-X 基本要素</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#MVC"><span class="nav-number"></span> <span class="nav-text">MVC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MVP"><span class="nav-number"></span> <span class="nav-text">MVP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MVVM"><span class="nav-number"></span> <span class="nav-text">MVVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#總結"><span class="nav-number">0.1.</span> <span class="nav-text">總結</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">0.1.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#資料模型與查詢語言"><span class="nav-number">1.</span> <span class="nav-text">資料模型與查詢語言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#資料庫類別"><span class="nav-number">2.</span> <span class="nav-text">資料庫類別</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#討論串"><span class="nav-number">3.</span> <span class="nav-text">討論串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考"><span class="nav-number">4.</span> <span class="nav-text">參考</span></a></li></ol></div>
             
 
           </div>
