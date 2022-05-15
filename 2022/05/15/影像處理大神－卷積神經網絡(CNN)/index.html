@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deep Learing,CNN,深度學習,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="影像辨識大神－卷積神經網絡(CNN)什麼是 Deep Learning？「簡單說，深度學習就是一個函數集，如此而已。」李宏毅說。類神經網路就是一堆函數的集合，我們丟進去一堆數值，整個網路就輸出一堆數值，從這裡面找出一個最好的結果，也就是機器運算出來的最佳解。 什麼是 神經網路 (Neural Network) ?就像我們的頭腦接受外界一堆資訊(input)，然後經過N年的教育(hidden lay">
+<meta name="keywords" content="Deep Learing,CNN,深度學習">
+<meta property="og:type" content="article">
+<meta property="og:title" content="影像辨識大神－卷積神經網絡">
+<meta property="og:url" content="https://missxie.github.io/2022/05/15/影像處理大神－卷積神經網絡(CNN)/index.html">
+<meta property="og:site_name" content="Xie&#39;s Blog">
+<meta property="og:description" content="影像辨識大神－卷積神經網絡(CNN)什麼是 Deep Learning？「簡單說，深度學習就是一個函數集，如此而已。」李宏毅說。類神經網路就是一堆函數的集合，我們丟進去一堆數值，整個網路就輸出一堆數值，從這裡面找出一個最好的結果，也就是機器運算出來的最佳解。 什麼是 神經網路 (Neural Network) ?就像我們的頭腦接受外界一堆資訊(input)，然後經過N年的教育(hidden lay">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/333.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/444.jpg">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/777.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/555.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/666.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/888.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/999.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/2222.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/3333.gif">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/4444.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/5555.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/6666.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/8888.png">
+<meta property="og:image" content="https://missxie.github.io/images/fig/深度學習圖/9999.png">
+<meta property="og:updated_time" content="2022-05-15T12:33:25.740Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="影像辨識大神－卷積神經網絡">
+<meta name="twitter:description" content="影像辨識大神－卷積神經網絡(CNN)什麼是 Deep Learning？「簡單說，深度學習就是一個函數集，如此而已。」李宏毅說。類神經網路就是一堆函數的集合，我們丟進去一堆數值，整個網路就輸出一堆數值，從這裡面找出一個最好的結果，也就是機器運算出來的最佳解。 什麼是 神經網路 (Neural Network) ?就像我們的頭腦接受外界一堆資訊(input)，然後經過N年的教育(hidden lay">
+<meta name="twitter:image" content="https://missxie.github.io/images/fig/深度學習圖/333.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://missxie.github.io/2022/05/15/影像處理大神－卷積神經網絡(CNN)/">
+
+
+
+
+
+  <title>影像辨識大神－卷積神經網絡 | Xie's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xie's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">學習筆記本</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2022/05/15/影像處理大神－卷積神經網絡(CNN)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sally Xie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">影像辨識大神－卷積神經網絡</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-05-15T20:05:22+08:00">
+                2022-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learing/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="影像辨識大神－卷積神經網絡-CNN"><a href="#影像辨識大神－卷積神經網絡-CNN" class="headerlink" title="影像辨識大神－卷積神經網絡(CNN)"></a>影像辨識大神－卷積神經網絡(CNN)</h1><h2 id="什麼是-Deep-Learning？"><a href="#什麼是-Deep-Learning？" class="headerlink" title="什麼是 Deep Learning？"></a>什麼是 Deep Learning？</h2><p>「簡單說，深度學習就是一個函數集，如此而已。」李宏毅說。類神經網路就是一堆函數的集合，我們丟進去一堆數值，整個網路就輸出一堆數值，從這裡面找出一個最好的結果，也就是機器運算出來的最佳解。</p>
+<h3 id="什麼是-神經網路-Neural-Network"><a href="#什麼是-神經網路-Neural-Network" class="headerlink" title="什麼是 神經網路 (Neural Network) ?"></a>什麼是 神經網路 (Neural Network) ?</h3><p>就像我們的頭腦接受外界一堆資訊(input)，然後經過N年的教育(hidden layre)，使我們心裡產生一個答案(output)。</p>
+<p><img src="/images/fig/深度學習圖/333.png" alt="圖案"></p>
+<p>以 AlphaGo 為例，團隊設定好神經網路架構後，便將大量的棋譜資料輸入，讓 AlphaGo 學習下圍棋的方法，最後它就能判斷棋盤上的各種狀況，並根據對手的落子做出回應。</p>
+<p>換句話說！如果讓 AlphaGo 學習《棋靈王》的棋譜，當對方下了第一手 5 之五，AlphaGo 就會知道下在天元是最佳解！</p>
+<p><img src="/images/fig/深度學習圖/444.jpg" alt="圖案"></p>
+<h3 id="所以，深度學習只要四個步驟："><a href="#所以，深度學習只要四個步驟：" class="headerlink" title="所以，深度學習只要四個步驟："></a>所以，深度學習只要四個步驟：</h3><ol start="0">
+<li>收集資料</li>
+<li>建構網路</li>
+<li>設定目標</li>
+<li>開始學習</li>
+</ol>
+<h2 id="ML-跟-DL-差在哪裡？"><a href="#ML-跟-DL-差在哪裡？" class="headerlink" title="ML 跟 DL 差在哪裡？"></a>ML 跟 DL 差在哪裡？</h2><p>都是從大量資料中找出最佳解，但最大的差異是，「特徵擷取」的方式。</p>
+<ul>
+<li>ML結構: 資料 → 特徵擷取(經由人類知識，從這種資料去萃取一些特徵資料(量化)) → 模型 → 答案</li>
+<li>DL結構: 資料 → 模型(特徵擷取自學) → 答案</li>
+</ul>
+<p>兩類的差異如下圖(網路找到的圖)，應該有比較清楚差在那了吧。<br><img src="/images/fig/深度學習圖/777.png" alt="圖案"></p>
+<h1 id="影像辨識大神"><a href="#影像辨識大神" class="headerlink" title="影像辨識大神"></a>影像辨識大神</h1><h2 id="卷積神經網路（Convolutional-Neural-Network-CNN"><a href="#卷積神經網路（Convolutional-Neural-Network-CNN" class="headerlink" title="卷積神經網路（Convolutional Neural Network, CNN)"></a>卷積神經網路（Convolutional Neural Network, CNN)</h2><p>CNN在影像識別方面的威力非常強大，許多影樣辨識的模型也都是以CNN的架構為基礎去做延伸。它是目前深度神經網路（deep neural network）領域的發展主力，在圖片辨別上甚至可以做到比人類還精準的程度。</p>
+<h3 id="辨識圈圈叉叉"><a href="#辨識圈圈叉叉" class="headerlink" title="辨識圈圈叉叉"></a>辨識圈圈叉叉</h3><p>如何知道這是叉叉還是圈圈？ 基本上我們腦袋早就知道了，因為我們”認識了”，所以我們也要讓CNN學習到認識圈圈叉叉的精髓，而最終學習完成後，以後CNN Model 都可以明確的告訴我，這個是是圈圈，那個是叉叉。</p>
+<p><img src="/images/fig/深度學習圖/555.png" alt="圖案"></p>
+<p>但事情沒有這麼簡單，因為電腦在比對這些圖片的時候非常刻板。在電腦看來，這些圖片只是一群排成二維矩陣、帶有位置編號的像素（就跟棋盤一樣）。在我們的例子裡，白色格子（即筆畫）的值為 1，黑色格子（即背景）的值為 -1。</p>
+<p><img src="/images/fig/深度學習圖/666.png" alt="圖案"></p>
+<h3 id="特徵擷取自學"><a href="#特徵擷取自學" class="headerlink" title="特徵擷取自學"></a>特徵擷取自學</h3><p>CNN 會比較兩張圖片裡的各個局部，這些局部被稱為特徵（feature）。比起比較整張圖片，藉由在相似的位置上比對大略特徵，CNN 能更好地分辨兩張圖片是否相同。</p>
+<p><img src="/images/fig/深度學習圖/888.png" alt="圖案"></p>
+<p>一張圖片裡的每個特徵都像一張更小的圖片，也就是更小的二維矩陣。這些特徵會捕捉圖片中的共通要素。<br>以叉叉的圖片為例，它最重要的特徵包括</p>
+<ul>
+<li>對角線</li>
+<li>中間的交叉</li>
+</ul>
+<p>也就是說，任何叉叉的線條或中心點應該都會含有這些特徵。</p>
+<p><img src="/images/fig/深度學習圖/999.png" alt="圖案"></p>
+<h3 id="卷積（convolution）"><a href="#卷積（convolution）" class="headerlink" title="卷積（convolution）"></a>卷積（convolution）</h3><p>每當 CNN 分辨一張新圖片時，在不知道上述特徵在哪的情況下，CNN 會比對圖片中的任何地方。為了計算整張圖片裡有多少相符的特徵，這背後的數學原理被稱為卷積（convolution），也就是 CNN 的名稱由來。</p>
+<p>要計算特徵和圖片局部的相符程度，只要將兩者各個像素上的值相乘、再將總和除以像素的數量。</p>
+<p> (-1 <em> 1) + (-1 </em> -1) + (-1 * -1) +</p>
+<p> (-1 <em> -1) + (1 </em> 1) + (-1 * -1) +</p>
+<p> (-1 <em> -1) + (-1 </em> -1) + (1 * 1) / 9 = 7 / 9 = 0.77</p>
+<p><img src="/images/fig/深度學習圖/2222.png" alt="圖案"></p>
+<p>以動態來看卷積過程如下：</p>
+<p>下面的動畫顯示步幅大小為1</p>
+<p><img src="/images/fig/深度學習圖/3333.gif" alt="圖案"></p>
+<p>我們只要重複上述過程、歸納出圖片中各種可能的特徵，就能完成卷積。然後，我們可以根據每次卷積的值和位置，製作一個新的二維矩陣。它可以告訴我們在原圖的哪些地方可以找到該特徵。值越接近 1 的局部和該特徵越相符，值越接近 -1 則相差越大，至於接近值接近 0 的局部，則幾乎沒有任何相似度可言。</p>
+<p><img src="/images/fig/深度學習圖/4444.png" alt="圖案"></p>
+<h3 id="池化（pooling）"><a href="#池化（pooling）" class="headerlink" title="池化（pooling）"></a>池化（pooling）</h3><p>從 CNN 的運作原理，不難看出它很耗運算資源。雖然我們可以只用一張紙解釋完 CNN 如何運作，但運作途中相加、相乘和相除的數量可以增加得非常快。用數學來表達，可以說這些運算的數量，會隨著圖片中相素的數量、每個特徵中像素的數量、以及特徵的數量呈現性增長。</p>
+<p>所以我們必須用一些簡化操作，那就是池化（pooling），池化是一個壓縮圖片並保留重要資訊的方法，池化會在圖片上選取不同窗口（window），並在這個窗口範圍中選擇一個最大值。實務上，邊長為二或三的正方形範圍，搭配兩像素的間隔（stride）是滿理想的設定。</p>
+<p>若選擇邊長是２的，那麼原圖經過池化以後，其所包含的像素數量會降為原本的四分之一，但因為池化後的圖片包含了原圖中各個範圍的最大值，它還是保留了每個範圍和各個特徵的相符程度。也就是說，池化後的資訊更專注於圖片中是否存在相符的特徵，而非圖片中哪裡存在這些特徵。</p>
+<p><img src="/images/fig/深度學習圖/5555.png" alt="圖案"></p>
+<h3 id="線性整流單元-Rectified-Linear-Unit，ReLU"><a href="#線性整流單元-Rectified-Linear-Unit，ReLU" class="headerlink" title="線性整流單元 (Rectified Linear Unit，ReLU)"></a>線性整流單元 (Rectified Linear Unit，ReLU)</h3><p>另一個細微但重要的步驟是ReLU，是一種Activation function，它的數學原理也很簡單——將圖片上的所有負數轉為 0。這個技巧可以避免 CNN 的運算結果趨近 0 或無限大。</p>
+<ul>
+<li>主要作用是引入非線性。</li>
+<li>在類神經網路中如果不使用Activation function，那麼在類神經網路中皆是以上層輸入的線性組合作為這一層的輸出（也就是矩陣相乘），輸出和輸入依然脫離不了線性關係，做深度類神經網路便失去意義。</li>
+</ul>
+<p>簡單來說，就是不重要的特徵我就不看了。</p>
+<p><img src="/images/fig/深度學習圖/6666.png" alt="圖案"></p>
+<h3 id="全連結層（fully-connected-layers"><a href="#全連結層（fully-connected-layers" class="headerlink" title="全連結層（fully connected layers)"></a>全連結層（fully connected layers)</h3><p>全連結層會集合高階層中篩選過的圖片，並將這些特徵資訊轉化為票數。</p>
+<p>在我們的例子裡有兩個選項：圈或叉。當我們對這個單元輸入圖片時，它會將所有像素的值當成一個一維清單，而不是前面的二維矩陣。清單裡的每個值都可以決定圖片中的符號是圈還是叉，不過這場選舉並不全然民主。由於某些值可以更好地判別叉，有些則更適合用來判斷圈，這些值可以投的票數會比其他值還多。所有值對不同選項所投下的票數，將會以權重（weight）或連結強度（connection strength）的方式來表示。</p>
+<p>最後運算結果機率最高的即是 output。</p>
+<p>也就是「我們丟進去一堆數值，整個網路就輸出一堆數值，從這裡面找出一個最好的結果，也就是機器運算出來的最佳解。」</p>
+<p><img src="/images/fig/深度學習圖/8888.png" alt="圖案"></p>
+<h3 id="一個基本的-CNN-Model-就此誕生"><a href="#一個基本的-CNN-Model-就此誕生" class="headerlink" title="一個基本的 CNN Model 就此誕生"></a>一個基本的 CNN Model 就此誕生</h3><p><img src="/images/fig/深度學習圖/9999.png" alt="圖案"></p>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>上述若有點了解後，會發現建立Model根本只是堆積木而已，所以我這邊先建立大家一些基本運作原理，再往下深入研究囉～</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://panx.asia/archives/53209" target="_blank" rel="noopener">3 分鐘搞懂深度學習到底在深什麼</a></p>
+<p><a href="https://brohrer.mcknote.com/zh-Hant/how_machine_learning_works/how_convolutional_neural_networks_work.html" target="_blank" rel="noopener">卷積神經網路的運作原理</a></p>
+<p><a href="https://kknews.cc/zh-tw/tech/nap23kg.html" target="_blank" rel="noopener">卷積神經網絡(CNN)介紹與實踐</a></p>
+<p><a href="https://medium.com/@chih.sheng.huang821/%E4%BB%80%E9%BA%BC%E6%98%AF%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7-%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92-587e6a0dc72a" target="_blank" rel="noopener">什麼是人工智慧、機器學習和深度學習?</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learing/" rel="tag"># Deep Learing</a>
+          
+            <a href="/tags/CNN/" rel="tag"># CNN</a>
+          
+            <a href="/tags/深度學習/" rel="tag"># 深度學習</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/10/06/SQLAndNoSQL/" rel="next" title="資料模型概述">
+                <i class="fa fa-chevron-left"></i> 資料模型概述
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sally Xie</p>
+              <p class="site-description motion-element" itemprop="description">怕忘記，就學著做筆記。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#影像辨識大神－卷積神經網絡-CNN"><span class="nav-number">1.</span> <span class="nav-text">影像辨識大神－卷積神經網絡(CNN)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼是-Deep-Learning？"><span class="nav-number">1.1.</span> <span class="nav-text">什麼是 Deep Learning？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼是-神經網路-Neural-Network"><span class="nav-number">1.1.1.</span> <span class="nav-text">什麼是 神經網路 (Neural Network) ?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所以，深度學習只要四個步驟："><span class="nav-number">1.1.2.</span> <span class="nav-text">所以，深度學習只要四個步驟：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ML-跟-DL-差在哪裡？"><span class="nav-number">1.2.</span> <span class="nav-text">ML 跟 DL 差在哪裡？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#影像辨識大神"><span class="nav-number">2.</span> <span class="nav-text">影像辨識大神</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#卷積神經網路（Convolutional-Neural-Network-CNN"><span class="nav-number">2.1.</span> <span class="nav-text">卷積神經網路（Convolutional Neural Network, CNN)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#辨識圈圈叉叉"><span class="nav-number">2.1.1.</span> <span class="nav-text">辨識圈圈叉叉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特徵擷取自學"><span class="nav-number">2.1.2.</span> <span class="nav-text">特徵擷取自學</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷積（convolution）"><span class="nav-number">2.1.3.</span> <span class="nav-text">卷積（convolution）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#池化（pooling）"><span class="nav-number">2.1.4.</span> <span class="nav-text">池化（pooling）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#線性整流單元-Rectified-Linear-Unit，ReLU"><span class="nav-number">2.1.5.</span> <span class="nav-text">線性整流單元 (Rectified Linear Unit，ReLU)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全連結層（fully-connected-layers"><span class="nav-number">2.1.6.</span> <span class="nav-text">全連結層（fully connected layers)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一個基本的-CNN-Model-就此誕生"><span class="nav-number">2.1.7.</span> <span class="nav-text">一個基本的 CNN Model 就此誕生</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結論"><span class="nav-number">2.2.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">2.3.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-id-card"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sally Xie</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
