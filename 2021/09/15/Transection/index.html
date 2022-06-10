@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Database,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="交易(Transection)Transaction，中文翻作交易或事務，是資料庫執行過程中的一個「邏輯單位」，一個 transaction 中包含多個對資料庫操作的行為，每個 transaction 有兩種可能的結局：全部執行成功 or 全部不執行（只要其中一個行為失敗就全部回滾）  這邊還是不免俗提到一下通常講到 transaction 都會舉的例子：轉帳。 假設今天用戶 A 要將自己的 10">
+<meta name="keywords" content="Database">
+<meta property="og:type" content="article">
+<meta property="og:title" content="交易(Transection)">
+<meta property="og:url" content="https://missxie.github.io/2021/09/15/Transection/index.html">
+<meta property="og:site_name" content="Xie&#39;s Blog">
+<meta property="og:description" content="交易(Transection)Transaction，中文翻作交易或事務，是資料庫執行過程中的一個「邏輯單位」，一個 transaction 中包含多個對資料庫操作的行為，每個 transaction 有兩種可能的結局：全部執行成功 or 全部不執行（只要其中一個行為失敗就全部回滾）  這邊還是不免俗提到一下通常講到 transaction 都會舉的例子：轉帳。 假設今天用戶 A 要將自己的 10">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://missxie.github.io/images/Transection/Untitled.png">
+<meta property="og:updated_time" content="2022-06-10T05:48:51.663Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="交易(Transection)">
+<meta name="twitter:description" content="交易(Transection)Transaction，中文翻作交易或事務，是資料庫執行過程中的一個「邏輯單位」，一個 transaction 中包含多個對資料庫操作的行為，每個 transaction 有兩種可能的結局：全部執行成功 or 全部不執行（只要其中一個行為失敗就全部回滾）  這邊還是不免俗提到一下通常講到 transaction 都會舉的例子：轉帳。 假設今天用戶 A 要將自己的 10">
+<meta name="twitter:image" content="https://missxie.github.io/images/Transection/Untitled.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://missxie.github.io/2021/09/15/Transection/">
+
+
+
+
+
+  <title>交易(Transection) | Xie's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xie's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">學習筆記本</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2021/09/15/Transection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sally Xie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">交易(Transection)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-09-15T20:05:22+08:00">
+                2021-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Database/" itemprop="url" rel="index">
+                    <span itemprop="name">Database</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="交易-Transection"><a href="#交易-Transection" class="headerlink" title="交易(Transection)"></a>交易(Transection)</h1><p>Transaction，中文翻作交易或事務，是資料庫執行過程中的一個「邏輯單位」，一個 transaction 中包含多個對資料庫操作的行為，每個 transaction 有兩種可能的結局：全部執行成功 or 全部不執行（只要其中一個行為失敗就全部回滾）</p>
+<p><img src="/images/Transection/Untitled.png" alt="Transection"></p>
+<p>這邊還是不免俗提到一下通常講到 transaction 都會舉的例子：<strong>轉帳</strong>。</p>
+<p>假設今天用戶 A 要將自己的 1000 元從台新銀行帳戶轉到玉山銀行帳戶，要執行的步驟會有兩個：</p>
+<ol>
+<li><p>台新銀行帳戶扣款 1000 元 </p>
+</li>
+<li><p>玉山銀行帳戶收到款項，增加 1000 元。</p>
+</li>
+</ol>
+<p>如果今天第一步成功第二步卻失敗會發生什麼事？</p>
+<p>用戶 A 的台新銀行帳戶就會少 1000 元，玉山銀行帳戶卻沒收到款項，總計白白損失 1000 元，真的慘。因此我們可以將以上的兩個步驟包在 transaction 當中，確保兩個步驟都成功才會完成，要是其中一個步驟失敗就會退到交易開始前的狀態，來避免資料不一致的悲劇發生。</p>
+<p><strong>一個可靠的transaction 通常擁有ACID特性。</strong></p>
+<h2 id="ACID的含義"><a href="#ACID的含義" class="headerlink" title="ACID的含義"></a>ACID的含義</h2><ul>
+<li>原子性(atomicity)</li>
+</ul>
+<aside><br>💡 交易期間該遵守的原則，如有一個原子交易，其中一個指令失敗時整個交易就會宣告失敗，而交易中已經執行過的指令如果涉及資料改動，則需要全數回復到未進行Transaction前(Rollback)，如交易中的指令都成功則可提交變更(Commit)。<br><br></aside>
+
+<ul>
+<li>一致性(consistency)</li>
+</ul>
+<aside><br>💡 在交易裡進行資料的改動，而這些資料的規則必須遵循當初訂定好的資料規則(資料欄位型態的限制、外部鍵…等)，如果不符合一樣會全數回復到未進行Transaction前(Rollback)，反之則提交變更(Commit)。<br><br></aside>
+
+<aside><br>💡 資料庫的某些陳述必須始終是正確的，例如：會計系統中所有帳戶的借貸必須始終是平衡的狀態。<br><br></aside>
+
+<ul>
+<li>隔離性(isolation)</li>
+</ul>
+<aside><br>💡 確保同一筆資料不會被兩個Transaction同時進行更改，避免Race Condition的狀況發生，<br><br></aside>
+
+<ul>
+<li>持久性(durability)</li>
+</ul>
+<aside><br>💡 是指當交易一旦提交變更(Commit)，除非存放空間的硬體受損，否則資料永遠不會流失。<br><br></aside>
+
+<h1 id="原子性及隔離性皆可應用在單個或多個物件操作。"><a href="#原子性及隔離性皆可應用在單個或多個物件操作。" class="headerlink" title="原子性及隔離性皆可應用在單個或多個物件操作。"></a><strong>原子性</strong>及隔離性皆可應用在單個或多個物件操作。</h1><h3 id="單物件寫入-p230"><a href="#單物件寫入-p230" class="headerlink" title="單物件寫入(p230)"></a>單物件寫入(p230)</h3><p>例：向資料庫寫入一個20kB的JSON document</p>
+<p>Q1: 發送了前10kB後發生網路中斷，資料庫是否還會將這個無法完整解析的10kB片段儲存？</p>
+<p>Q2: 資料庫在覆寫磁碟舊值時發生電源故障，最後是否會得到一個新舊值嫁接的資料?</p>
+<p>Q3: 若有另一個客戶端在寫入過程中讀取了該document，看到的會是已經做過更新的值嗎？</p>
+<p>以上問題可透過</p>
+<ul>
+<li>系統崩潰恢復日誌來實作達到原子性</li>
+<li>透過對物件加鎖來實現隔離</li>
+<li>遞增操作-多執行緒設計角度的原子性行為、可序列化的遞增。</li>
+<li>比較和設置-當值沒有被其他人併發更改時才可以寫入</li>
+</ul>
+<h3 id="多物件交易真的必要嗎？"><a href="#多物件交易真的必要嗎？" class="headerlink" title="多物件交易真的必要嗎？"></a>多物件交易真的必要嗎？</h3><p>雖然許多分散式資料儲存已放棄多物件交易，因為對應跨分區難實作，且在一些情況下，單物件的增刪改其實就夠用，但還是有些地方需要多物件交易才有意義。</p>
+<ul>
+<li>關聯式資料庫的table通常具有外鍵來參考另一個table，多物件交易可以讓你確保這些參照有效。</li>
+<li>文件式資料庫，因為反正規化，所以常常需要一次性多文件大更新，這種狀況下多物件交易非常有用。</li>
+<li>有次索引的資料庫，透過交易隔離，來達到把值更新到不同裡資料庫的索引。</li>
+</ul>
+<h2 id="弱隔離級別-不可序列化的，non-serializable"><a href="#弱隔離級別-不可序列化的，non-serializable" class="headerlink" title="弱隔離級別(不可序列化的，non serializable)"></a>弱隔離級<strong>別(不可序列化的，non serializable)</strong></h2><aside><br>💡 防止兩個交易嘗試同時修改相同的資料時，出現並發(競爭條件)問題。<br><br></aside>
+
+<aside><br>💡 不想犧牲性能當作代價時，可採用弱隔離級別，但只能防止一些並發問題，不是全部喔！<br><br></aside>
+
+<ul>
+<li>讀<strong>已提交</strong>(read committed)<ul>
+<li>無髒讀：從資料庫讀取時，你只能看到已提交的資料。</li>
+<li>無髒寫：當寫入資料庫時，你只能覆寫已提交的資料。</li>
+<li>可能導致<strong>讀取偏斜(圖7-6)，</strong>備份 / 分析查詢 / 完整性檢查無法忽視這種狀況，可用快照隔離解決</li>
+</ul>
+</li>
+<li><p>快照隔離(可重複讀取)</p>
+<ul>
+<li>想法是每個交易都從資料庫的一致快照中讀取資料 == 交易一開始看到的資料都是已經提交到資料庫的資料</li>
+<li>關鍵原則：讀方不會阻塞寫方，寫方也不會阻塞讀方(只有寫加鎖)</li>
+<li>可見性規則：當交易從資料庫讀取資料時，交易ＩＤ會被用於決定哪些物件是可見的、哪些是不可見的。<ul>
+<li>在每個交易開始時，資料庫會列出所有正在執行的其他交易，那些其他交易所有的寫入都會被忽略。</li>
+<li>任何被中止的交易所做的寫入都會被忽略</li>
+<li>對於使後來交易ID的交易(比當前更晚來的交易)，其所做的寫入，無論是否已提交，都將忽略</li>
+<li>除此之外，其他的寫入對於應用程式的查詢而言都是可見的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>防止丟失更新：應用程式從資料庫讀取某個值，修改它，在寫回更新的值，極可能出現更新丟失。若有兩個交易同時執行此操作，一個可能丟失，第二個寫入可能不會包含第一個修改。</p>
+<ol>
+<li><p>遞增計數器 </p>
+</li>
+<li><p>更新帳戶餘額 </p>
+</li>
+<li><p>兩個使用者同時編輯wiki頁面，在同時發送整個頁面給資料庫做修改</p>
+</li>
+</ol>
+<ul>
+<li>原子寫入：許多資料庫都有提供原子更新操作，可不用自己操作：Update set</li>
+<li>顯式加鎖(p244)：Begin transaction; XXXX commit;</li>
+<li>自動檢測更新丟失：交易管理器自動檢測</li>
+<li>比較和設置(p245)：只有當值從上次讀取後並未發生改變的情況，才允許被更新</li>
+</ul>
+</li>
+<li>寫入偏斜(p247)：因使用快照隔離，導致判斷的結果都一樣並讓程式往下跑(幻讀)，最終把所有的值都更新。可使用加鎖，但也無法預防全部。</li>
+</ul>
+<h2 id="可序列化-serializable"><a href="#可序列化-serializable" class="headerlink" title="可序列化 serializable"></a>可序列化 <strong>serializable</strong></h2><ul>
+<li>嚴格循序執行<ul>
+<li>直接免除有併發執行的機會</li>
+<li>用預存程序封裝交易，但是語言太多樣、難管理</li>
+</ul>
+</li>
+<li>兩段式加鎖(2PL)：實作可序列化的標準方法，但因性能原因被棄用<ul>
+<li>寫方阻止其他寫方，還會阻止各種讀方</li>
+</ul>
+</li>
+<li><p>可序列化的快照隔離(SSI)：超狂結合體，當有一個交易想要提交時，會被檢查，如果執行不是可序列化的，會被中止。但此技術還很年輕，仍需證明性能可行。</p>
+</li>
+<li><p><strong><a href="https://oldmo860617.medium.com/database-transaction-acid-156a3b75845e" target="_blank" rel="noopener">Database Transaction &amp; ACID</a></strong></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Database/" rel="tag"># Database</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/20/designPattern/" rel="next" title="iOS - MVC/MVP/MVVM 到底差在哪裡？">
+                <i class="fa fa-chevron-left"></i> iOS - MVC/MVP/MVVM 到底差在哪裡？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/10/06/SQLAndNoSQL/" rel="prev" title="資料模型概述">
+                資料模型概述 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sally Xie</p>
+              <p class="site-description motion-element" itemprop="description">怕忘記，就學著做筆記。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#交易-Transection"><span class="nav-number">1.</span> <span class="nav-text">交易(Transection)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ACID的含義"><span class="nav-number">1.1.</span> <span class="nav-text">ACID的含義</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原子性及隔離性皆可應用在單個或多個物件操作。"><span class="nav-number">2.</span> <span class="nav-text">原子性及隔離性皆可應用在單個或多個物件操作。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#單物件寫入-p230"><span class="nav-number">2.0.1.</span> <span class="nav-text">單物件寫入(p230)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多物件交易真的必要嗎？"><span class="nav-number">2.0.2.</span> <span class="nav-text">多物件交易真的必要嗎？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#弱隔離級別-不可序列化的，non-serializable"><span class="nav-number">2.1.</span> <span class="nav-text">弱隔離級別(不可序列化的，non serializable)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可序列化-serializable"><span class="nav-number">2.2.</span> <span class="nav-text">可序列化 serializable</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-id-card"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sally Xie</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
