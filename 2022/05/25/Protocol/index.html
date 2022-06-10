@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Deep Learing,">
+  <meta name="keywords" content="Swift,iOS,Apple,Protocol,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="怕忘記，就學著做筆記。">
-<meta name="keywords" content="Deep Learing">
+<meta name="description" content="Swift 的 Protocol Protocol 僅僅只用來做為一層長得跟 Object 一樣的皮 PAT （Protocol with Associated Type）無法被用來做為一種 Type (Existential Container)  💡 Protocol ‘ＸＸＸ’ can only be used as a generic constraint because it has">
+<meta name="keywords" content="Swift,iOS,Apple,Protocol">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HellWord">
-<meta property="og:url" content="https://missxie.github.io/2019/03/28/HellWord/index.html">
+<meta property="og:title" content="Swift 的 Protocol">
+<meta property="og:url" content="https://missxie.github.io/2022/05/25/Protocol/index.html">
 <meta property="og:site_name" content="Xie&#39;s Blog">
-<meta property="og:description" content="怕忘記，就學著做筆記。">
+<meta property="og:description" content="Swift 的 Protocol Protocol 僅僅只用來做為一層長得跟 Object 一樣的皮 PAT （Protocol with Associated Type）無法被用來做為一種 Type (Existential Container)  💡 Protocol ‘ＸＸＸ’ can only be used as a generic constraint because it has">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-03-29T16:45:14.791Z">
+<meta property="og:updated_time" content="2022-06-10T06:20:20.137Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HellWord">
-<meta name="twitter:description" content="怕忘記，就學著做筆記。">
+<meta name="twitter:title" content="Swift 的 Protocol">
+<meta name="twitter:description" content="Swift 的 Protocol Protocol 僅僅只用來做為一層長得跟 Object 一樣的皮 PAT （Protocol with Associated Type）無法被用來做為一種 Type (Existential Container)  💡 Protocol ‘ＸＸＸ’ can only be used as a generic constraint because it has">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://missxie.github.io/2019/03/28/HellWord/">
+  <link rel="canonical" href="https://missxie.github.io/2022/05/25/Protocol/">
 
 
 
 
 
-  <title>HellWord | Xie's Blog</title>
+  <title>Swift 的 Protocol | Xie's Blog</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2019/03/28/HellWord/">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2022/05/25/Protocol/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sally Xie">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HellWord</h1>
+          <h1 class="post-title" itemprop="name headline">Swift 的 Protocol</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-03-28T00:05:07+08:00">
-                2019-03-28
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-05-25T20:05:22+08:00">
+                2022-05-25
               </time>
             
 
@@ -305,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/TensorFlow/" itemprop="url" rel="index">
-                    <span itemprop="name">TensorFlow</span>
+                  <a href="/categories/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
                   </a>
                 </span>
 
@@ -342,7 +342,30 @@
       
 
       
-        
+        <h1 id="Swift-的-Protocol"><a href="#Swift-的-Protocol" class="headerlink" title="Swift 的 Protocol"></a>Swift 的 Protocol</h1><ol>
+<li>Protocol 僅僅只用來做為一層長得跟 Object 一樣的皮</li>
+<li>PAT （Protocol with Associated Type）無法被用來做為一種 Type (Existential Container)</li>
+</ol>
+<aside><br>💡 Protocol ‘ＸＸＸ’ can only be used as a generic constraint because it has Self or associated type requirements.<br><br></aside>
+
+<ul>
+<li><strong>Existential</strong><ul>
+<li><strong>Existential Type</strong></li>
+<li><strong>Existential values</strong></li>
+<li><strong>Existential containers</strong></li>
+<li>W<strong>itness tables</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="Existential-Type"><a href="#Existential-Type" class="headerlink" title="Existential Type"></a><strong>Existential Type</strong></h3><aside><br>💡 描述了抽像類型的接口。當類型是<code>protocol</code>時，是中<strong>存在</strong>對象的類型，因為存儲或傳遞一個<code>protocol</code>類型的對像對像在運行時的真實類型是不透明的（也就是編譯期不知道的，因此我們也無法確定這些對象的佈局）。<br><br></aside>
+
+<h3 id="Existential-Value"><a href="#Existential-Value" class="headerlink" title="Existential Value"></a><strong>Existential Value</strong></h3><aside><br>💡 <strong>existential type</strong> 的值，就是 <strong>existential value</strong><br><br></aside>
+
+<h3 id="Existential-Container"><a href="#Existential-Container" class="headerlink" title="Existential Container"></a>Existential Container</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">protocol: Foo&#123;&#125;</span><br><span class="line">let foos: [Foo] = ...</span><br><span class="line"></span><br><span class="line">簡單来说 existential of a protocol 就是一個编译器生成的盒子 box，</span><br><span class="line">用来存放遵從這個 protocol 的值，這個盒子，也叫做 Existential Container，盒子裡面的東西，就叫做 witness。</span><br></pre></td></tr></table></figure>
+<p>type = class / struct / enum</p>
+<p><strong><code>Self</code></strong> with a capital S refers to whatever type is conforming to the protocol</p>
+<p><strong><code>Self</code></strong>大寫的 S 指的是符合協議的任何類型</p>
+
       
     </div>
     
@@ -359,7 +382,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Deep-Learing/" rel="tag"># Deep Learing</a>
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/Apple/" rel="tag"># Apple</a>
+          
+            <a href="/tags/Protocol/" rel="tag"># Protocol</a>
           
         </div>
       
@@ -372,15 +401,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2022/05/24/Homebrewzsh/" rel="next" title="Apple M1 安裝 Homebrew & zsh 設定">
+                <i class="fa fa-chevron-left"></i> Apple M1 安裝 Homebrew & zsh 設定
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/28/CreateSubCategories/" rel="prev" title="Hexo 建立「子分類」資料夾">
-                Hexo 建立「子分類」資料夾 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -432,8 +461,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -493,6 +531,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Swift-的-Protocol"><span class="nav-number">1.</span> <span class="nav-text">Swift 的 Protocol</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Existential-Type"><span class="nav-number">1.0.1.</span> <span class="nav-text">Existential Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Existential-Value"><span class="nav-number">1.0.2.</span> <span class="nav-text">Existential Value</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Existential-Container"><span class="nav-number">1.0.3.</span> <span class="nav-text">Existential Container</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
