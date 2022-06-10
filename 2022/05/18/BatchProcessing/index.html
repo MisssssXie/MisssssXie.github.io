@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="SQL,NoSQL,Graph,">
+  <meta name="keywords" content="Database,">
 
 
 
@@ -79,18 +79,25 @@
 
 
 
-<meta name="description" content="資料模型與查詢語言 資料模型 Relational Document Graph    資料庫類別   類別 模型 簡介 特性 使用時機     SQL 關聯式模型 關聯式資料庫(Relational Database)   以其中關係(Table) 被組織起來，每個關係都是元組(tuples，指的是資料列row)的無序組合 1. 關聯式資料庫，兩個以上的資料表可以產生關聯性。2. 建立的資料表，">
-<meta name="keywords" content="SQL,NoSQL,Graph">
+<meta name="description" content="批次處理批次處理系統批次處理（Batch Processing）的作業方式，是先蒐集資料，當資料累積到一個程度時，再一次處理所有的資料。批次處理型的作業系統，適合處理週期性的大筆資料。 UNIXUNIX是一套作業系統，就如同 Windows XP、Windows Server 2003 或 Mac OS 一樣，負責管理電腦所有資源，包括處理器、記憶體、週邊設備、檔案等。 使用者透過應用程式或作業系">
+<meta name="keywords" content="Database">
 <meta property="og:type" content="article">
-<meta property="og:title" content="資料模型概述">
-<meta property="og:url" content="https://missxie.github.io/2021/10/06/SQLAndNoSQL/index.html">
+<meta property="og:title" content="交易(Transection)">
+<meta property="og:url" content="https://missxie.github.io/2022/05/18/BatchProcessing/index.html">
 <meta property="og:site_name" content="Xie&#39;s Blog">
-<meta property="og:description" content="資料模型與查詢語言 資料模型 Relational Document Graph    資料庫類別   類別 模型 簡介 特性 使用時機     SQL 關聯式模型 關聯式資料庫(Relational Database)   以其中關係(Table) 被組織起來，每個關係都是元組(tuples，指的是資料列row)的無序組合 1. 關聯式資料庫，兩個以上的資料表可以產生關聯性。2. 建立的資料表，">
+<meta property="og:description" content="批次處理批次處理系統批次處理（Batch Processing）的作業方式，是先蒐集資料，當資料累積到一個程度時，再一次處理所有的資料。批次處理型的作業系統，適合處理週期性的大筆資料。 UNIXUNIX是一套作業系統，就如同 Windows XP、Windows Server 2003 或 Mac OS 一樣，負責管理電腦所有資源，包括處理器、記憶體、週邊設備、檔案等。 使用者透過應用程式或作業系">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-10-06T15:10:36.110Z">
+<meta property="og:image" content="https://missxie.github.io/images/BatchProcessing/unix.png">
+<meta property="og:image" content="https://missxie.github.io/images/BatchProcessing/Untitled.png">
+<meta property="og:image" content="https://missxie.github.io/images/BatchProcessing/Untitled1.png">
+<meta property="og:image" content="https://missxie.github.io/images/BatchProcessing/message.png">
+<meta property="og:image" content="https://missxie.github.io/images/BatchProcessing/Untitled2.png">
+<meta property="og:image" content="https://missxie.github.io/2022/05/18/BatchProcessing/%/images/BatchProcessing/Untitled2/Untitled3.png">
+<meta property="og:updated_time" content="2022-06-10T05:57:46.854Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="資料模型概述">
-<meta name="twitter:description" content="資料模型與查詢語言 資料模型 Relational Document Graph    資料庫類別   類別 模型 簡介 特性 使用時機     SQL 關聯式模型 關聯式資料庫(Relational Database)   以其中關係(Table) 被組織起來，每個關係都是元組(tuples，指的是資料列row)的無序組合 1. 關聯式資料庫，兩個以上的資料表可以產生關聯性。2. 建立的資料表，">
+<meta name="twitter:title" content="交易(Transection)">
+<meta name="twitter:description" content="批次處理批次處理系統批次處理（Batch Processing）的作業方式，是先蒐集資料，當資料累積到一個程度時，再一次處理所有的資料。批次處理型的作業系統，適合處理週期性的大筆資料。 UNIXUNIX是一套作業系統，就如同 Windows XP、Windows Server 2003 或 Mac OS 一樣，負責管理電腦所有資源，包括處理器、記憶體、週邊設備、檔案等。 使用者透過應用程式或作業系">
+<meta name="twitter:image" content="https://missxie.github.io/images/BatchProcessing/unix.png">
 
 
 
@@ -120,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="https://missxie.github.io/2021/10/06/SQLAndNoSQL/">
+  <link rel="canonical" href="https://missxie.github.io/2022/05/18/BatchProcessing/">
 
 
 
 
 
-  <title>資料模型概述 | Xie's Blog</title>
+  <title>交易(Transection) | Xie's Blog</title>
   
 
 
@@ -253,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2021/10/06/SQLAndNoSQL/">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2022/05/18/BatchProcessing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sally Xie">
@@ -270,7 +277,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">資料模型概述</h1>
+          <h1 class="post-title" itemprop="name headline">交易(Transection)</h1>
         
 
         <div class="post-meta">
@@ -282,8 +289,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-10-06T23:05:22+08:00">
-                2021-10-06
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-05-18T20:05:22+08:00">
+                2022-05-18
               </time>
             
 
@@ -342,54 +349,67 @@
       
 
       
-        <h2 id="資料模型與查詢語言"><a href="#資料模型與查詢語言" class="headerlink" title="資料模型與查詢語言"></a>資料模型與查詢語言</h2><ul>
-<li>資料模型<ul>
-<li>Relational</li>
-<li>Document</li>
-<li>Graph</li>
+        <h1 id="批次處理"><a href="#批次處理" class="headerlink" title="批次處理"></a>批次處理</h1><h1 id="批次處理系統"><a href="#批次處理系統" class="headerlink" title="批次處理系統"></a>批次處理系統</h1><p>批次處理（Batch Processing）的作業方式，是先蒐集資料，當資<br>料累積到一個程度時，再一次處理所有的資料。批次處理型的作業系<br>統，適合處理週期性的大筆資料。</p>
+<h2 id="UNIX"><a href="#UNIX" class="headerlink" title="UNIX"></a>UNIX</h2><p>UNIX是一套作業系統，就如同 Windows XP、Windows Server 2003 或 Mac OS 一樣，負責管理電腦所有資源，包括處理器、記憶體、週邊設備、檔案等。</p>
+<p>使用者透過應用程式或作業系統來操控電腦硬體，作業系統再將執行的結果回應給使用者或應用程式，因此可以說，作業系統是電腦硬體與使用者/應用程式之間的溝通橋樑。</p>
+<p><img src="/images/BatchProcessing/unix.png" alt="unix"></p>
+<h2 id="Unix哲學"><a href="#Unix哲學" class="headerlink" title="Unix哲學"></a>Unix哲學</h2><ul>
+<li>每個程式一次只做好一件事。 最佳代表：Sort</li>
+<li>預期每個程式的輸出都將會變成另一個未知程式的輸入。不要讓無關資訊干擾輸出。</li>
+<li>設計和建構軟體時儘早嘗試，且重建時不要猶豫</li>
+<li>優先使用工具來幫助減輕程式設計任務的負擔。</li>
+</ul>
+<blockquote>
+<p>Unix 最大的侷限：單台機器上執行，因此給Hadoop一個切入點，一個能夠儲存並管理大量資料的平台。</p>
+</blockquote>
+<h1 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h1><h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><ul>
+<li>跟Unix工具有幾分相似，但是卻可以分佈在<strong>數千台</strong>機器上。</li>
+<li>一個MapReduce相當於一個Unix程序，接受一個或多個輸入，然後產生一個或多個輸出。</li>
+<li>由Google提出，用來處理大量資料的軟體設計模型，批次處理演算法。</li>
+<li>MapReduce作業是在<strong>分散式檔案系統</strong>上讀寫作業</li>
+</ul>
+<h2 id="分散式檔案系統HDFS-Hadoop-Distributed-File-System"><a href="#分散式檔案系統HDFS-Hadoop-Distributed-File-System" class="headerlink" title="分散式檔案系統HDFS(Hadoop Distributed File System)"></a>分散式檔案系統<strong>HDFS</strong>(Hadoop Distributed File System)</h2><ul>
+<li>Hadoop實作的 MapReduce檔案系統被稱<strong>HDFS</strong>(Hadoop Distributed File System)，重新實作ＧＯＯＧＬＥ檔案系統ＧＦＳ的開放原始碼實作版本。最初由Yahoo提出<ul>
+<li>存儲大數據</li>
+<li>為應用提供大數據高速讀取的能力</li>
 </ul>
 </li>
+<li>主要特點是通過將數據和計算分布在集群中的各節點伺服器，達到分布式計算的目的。</li>
+<li>計算邏輯和需要用到的數據在就近的節點，分區並行計算後再匯總(Map &amp; Reduce)。</li>
 </ul>
-<h2 id="資料庫類別"><a href="#資料庫類別" class="headerlink" title="資料庫類別"></a>資料庫類別</h2><table>
-<thead>
-<tr>
-<th>類別</th>
-<th>模型</th>
-<th>簡介</th>
-<th>特性</th>
-<th>使用時機</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SQL</td>
-<td>關聯式模型</td>
-<td>關聯式資料庫(Relational Database) <br> <br> 以其中關係(Table) 被組織起來，每個關係都是元組(tuples，指的是資料列row)的無序組合</td>
-<td>1. 關聯式資料庫，兩個以上的資料表可以產生關聯性。<br><br>2. 建立的資料表，欄位就不能變動。<br><br>3. 可以複雜的查詢。<br><br>4. 儲存重要資料，例如會員資料、訂單資料、交易資料等。<br><br>5. 擴充能力弱、成本高。</td>
-<td>1. 資料與資料之間有關聯性.<br><br> 2. 需要複雜的查詢</td>
-</tr>
-<tr>
-<td>NoSQL</td>
-<td>非關聯式模型</td>
-<td>文件資料庫（Document Database）以文件的形式儲存。<br>每個文件都是自包含的資料單元，是一系列資料項的集合。<br>每個資料項都有一個名稱與對應的值。<br><br>圖形資料庫（Graph Database) 將資料以圖的方式儲存。<br>實體會被作為頂點，而實體之間的關係則會被作為邊。<br>比如我們有三個實體，Steve Jobs、Apple和Next，則會有兩個“Founded by”的邊將Apple和Next連線到Steve Jobs。</td>
-<td>1. 非關聯式資料庫，處理速度快。<br><br> 2. 可依需求隨時增加或減少，橫向擴充能力強、成本低  <br><br> 3. 儲存單純、無關聯的。<br><br>  4. 超大規模資料儲存，抓取局部性資料強，更具動態性和表達力</td>
-<td>1. 資料量大 <br><br>2. 單純的資料、無關聯 <br><br>3. 在不清楚資料結構的時候</td>
-</tr>
-</tbody>
-</table>
-<h2 id="討論串"><a href="#討論串" class="headerlink" title="討論串"></a>討論串</h2><ul>
-<li>請舉例目前在專案中使用NoSQL、SQL的情境？ </li>
-<li>上述提到的情境是否會想換成NoSQL or SQL? 如果是，為什麼？ (如果原本是用SQL會不會想換成NoSQL)</li>
-<li>覺得哪一種應用場景下特別適合圖模型(Graph Database) ？ 為什麼？</li>
-<li>除了以上提到的資料特性，還有哪些特性是用哪種模型呢？</li>
-<li>NoSQL除了文件資料庫、圖形資料庫還有哪些資料庫？請舉例並說明差異。</li>
-<li>SQL &amp; NoSQL是否可以共存？請舉例。</li>
-<li>GraphQL v.s. REST API</li>
+<h2 id="HDFS架構"><a href="#HDFS架構" class="headerlink" title="HDFS架構"></a><strong>HDFS架構</strong></h2><p>和HDFS 打交道是通過一個client library. 無論讀取一個文件或者寫一個文件，我們都是把數據交給HDFS client，它負責和Name nodes 以及Data nodes 聯繫並傳輸數據</p>
+<p><img src="/images/BatchProcessing/Untitled.png" alt="HDFS"></p>
+<ul>
+<li><strong>Name Nodes：類似中央伺服器，負責跟蹤哪些檔案區塊(</strong> data block<strong>)儲存在哪台機器上</strong></li>
+<li><strong>Data Nodes：存儲data block 的機器，在讀寫過程中，Data nodes 負責直接把用戶讀取的文件block 傳給client，也負責直接接收用戶寫的文件。</strong></li>
 </ul>
-<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ol>
-<li><a href="https://www.itread01.com/content/1549348208.html" target="_blank" rel="noopener">Nosql資料庫的分類及應用場景</a></li>
-<li><a href="https://doublekk2058.notion.site/Graph-Like-2191c827caf84ae881df9421e55c488d" target="_blank" rel="noopener">Graph-Like資料模型</a></li>
+<p>當我們讀取一個文件時：</p>
+<ol>
+<li>Client聯繫 Name nodes，得到文件的 data block组成、以及每個 data block 所在的機器以及具體存放位置</li>
+<li>Client 聯繫 Data nodes，進行讀寫操作</li>
 </ol>
+<h2 id="MapReduce流程"><a href="#MapReduce流程" class="headerlink" title="MapReduce流程"></a>MapReduce流程</h2><aside><br>💡 MapReduce其實是一種開發模式（Program Model），基本上可以把整個邏輯分成為Map階段和Reduce階段。<br><br></aside>
+
+<ul>
+<li>Map：基本上會做filtering和sorting並且傳出一個key value pair做結果</li>
+</ul>
+<p>（以word count為例，每一個字會作為最後的key，而value則是1代表有一筆）</p>
+<ul>
+<li>Reduce：基本上會做整合</li>
+</ul>
+<p>（以word count為例，從Map傳過來的key如果一樣，表示同一個字，因此把一樣的key做加總最後的出總筆數）</p>
+<p><img src="/images/BatchProcessing/Untitled1.png" alt="MapReduce流程"></p>
+<p><img src="/images/BatchProcessing/message.png" alt="message"></p>
+<h2 id="MapReduce的Joins"><a href="#MapReduce的Joins" class="headerlink" title="MapReduce的Joins"></a>MapReduce的Joins</h2><p>然而，MapReduce並沒有索引的概念！當給MapReduce作業一組檔案輸入時，他會讀取這些檔案全部的內容，資料庫將此操作稱為“全表掃描”，如果資料量很大還全表掃描其實挺可怕！</p>
+<p>Hadoop支持兩種Join，以基於某個列連接兩個或多個數據集。Map-side join和Reduce-side join。</p>
+<ul>
+<li>Map-side join：當一個數據集很大而另一個數據集很小時使用</li>
+<li>Reduce-side join：可以連接兩個大數據集。</li>
+</ul>
+<h2 id="Map-side-join"><a href="#Map-side-join" class="headerlink" title="Map-side join"></a>Map-side join</h2><p>將數據從不同的dataset中取出，連接起來並放到相應的某個Mapper中處理，因此key相同的數據肯定會在同一個Mapper裡面一起得到處理的。</p>
+<p><img src="/images/BatchProcessing/Untitled2.png" alt="Map-side join"></p>
+<h2 id="Reduce-side-join"><a href="#Reduce-side-join" class="headerlink" title="Reduce-side join"></a>Reduce-side join</h2><p>Map端的產出結果分兩類：有哪些Key，以及每個Key有哪些值。Reducer收到後，自己依Key去巡覽各Key的明細產生關聯結果</p>
+<p><img src="%/images/BatchProcessing/Untitled2/Untitled3.png" alt="Reduce-side"></p>
 
       
     </div>
@@ -407,11 +427,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SQL/" rel="tag"># SQL</a>
-          
-            <a href="/tags/NoSQL/" rel="tag"># NoSQL</a>
-          
-            <a href="/tags/Graph/" rel="tag"># Graph</a>
+            <a href="/tags/Database/" rel="tag"># Database</a>
           
         </div>
       
@@ -424,8 +440,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/09/15/Transection/" rel="next" title="交易(Transection)">
-                <i class="fa fa-chevron-left"></i> 交易(Transection)
+              <a href="/2022/05/15/影像處理大神－卷積神經網絡(CNN)/" rel="next" title="影像辨識大神－卷積神經網絡">
+                <i class="fa fa-chevron-left"></i> 影像辨識大神－卷積神經網絡
               </a>
             
           </div>
@@ -433,10 +449,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2022/05/15/影像處理大神－卷積神經網絡(CNN)/" rel="prev" title="影像辨識大神－卷積神經網絡">
-                影像辨識大神－卷積神經網絡 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -568,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#資料模型與查詢語言"><span class="nav-number">1.</span> <span class="nav-text">資料模型與查詢語言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#資料庫類別"><span class="nav-number">2.</span> <span class="nav-text">資料庫類別</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#討論串"><span class="nav-number">3.</span> <span class="nav-text">討論串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考"><span class="nav-number">4.</span> <span class="nav-text">參考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#批次處理"><span class="nav-number">1.</span> <span class="nav-text">批次處理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#批次處理系統"><span class="nav-number">2.</span> <span class="nav-text">批次處理系統</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#UNIX"><span class="nav-number">2.1.</span> <span class="nav-text">UNIX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unix哲學"><span class="nav-number">2.2.</span> <span class="nav-text">Unix哲學</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MapReduce"><span class="nav-number">3.</span> <span class="nav-text">MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#簡介"><span class="nav-number">3.1.</span> <span class="nav-text">簡介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分散式檔案系統HDFS-Hadoop-Distributed-File-System"><span class="nav-number">3.2.</span> <span class="nav-text">分散式檔案系統HDFS(Hadoop Distributed File System)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HDFS架構"><span class="nav-number">3.3.</span> <span class="nav-text">HDFS架構</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MapReduce流程"><span class="nav-number">3.4.</span> <span class="nav-text">MapReduce流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MapReduce的Joins"><span class="nav-number">3.5.</span> <span class="nav-text">MapReduce的Joins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map-side-join"><span class="nav-number">3.6.</span> <span class="nav-text">Map-side join</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reduce-side-join"><span class="nav-number">3.7.</span> <span class="nav-text">Reduce-side join</span></a></li></ol></li></ol></div>
             
 
           </div>
