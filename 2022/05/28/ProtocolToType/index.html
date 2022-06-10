@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,categories,">
+  <meta name="keywords" content="Swift,iOS,Apple,Protocol,">
 
 
 
@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="前言碎碎念嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：] 成果 流程概述 建立「TensorFlow」資料夾 更改資料夾內「index」md 檔敘述 部署  開始實作1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」$ cd your-hex">
-<meta name="keywords" content="Hexo,categories">
+<meta name="description" content="Protocol 無法當Type時的解法 Protocol ‘XXXXXXX’ can only be used as a generic constraint because it has Self or associated type requirements  解法1 ：新物件再包一層泛型並Conform Protocol連動，但這樣沒有同一個介面可以當Type  進階解法：用物件當抽象介面">
+<meta name="keywords" content="Swift,iOS,Apple,Protocol">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo 建立「子分類」資料夾">
-<meta property="og:url" content="https://missxie.github.io/2019/03/28/CreateSubCategories/index.html">
+<meta property="og:title" content="Protocol 無法當Type時的解法">
+<meta property="og:url" content="https://missxie.github.io/2022/05/28/ProtocolToType/index.html">
 <meta property="og:site_name" content="Xie&#39;s Blog">
-<meta property="og:description" content="前言碎碎念嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：] 成果 流程概述 建立「TensorFlow」資料夾 更改資料夾內「index」md 檔敘述 部署  開始實作1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」$ cd your-hex">
+<meta property="og:description" content="Protocol 無法當Type時的解法 Protocol ‘XXXXXXX’ can only be used as a generic constraint because it has Self or associated type requirements  解法1 ：新物件再包一層泛型並Conform Protocol連動，但這樣沒有同一個介面可以當Type  進階解法：用物件當抽象介面">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:image" content="https://missxie.github.io/images/hexo1.png">
-<meta property="og:updated_time" content="2019-04-07T15:43:36.386Z">
+<meta property="og:image" content="https://missxie.github.io/images/ProtocolToType/image.png">
+<meta property="og:updated_time" content="2022-06-10T06:23:52.245Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo 建立「子分類」資料夾">
-<meta name="twitter:description" content="前言碎碎念嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：] 成果 流程概述 建立「TensorFlow」資料夾 更改資料夾內「index」md 檔敘述 部署  開始實作1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」$ cd your-hex">
-<meta name="twitter:image" content="https://missxie.github.io/images/hexo1.png">
+<meta name="twitter:title" content="Protocol 無法當Type時的解法">
+<meta name="twitter:description" content="Protocol 無法當Type時的解法 Protocol ‘XXXXXXX’ can only be used as a generic constraint because it has Self or associated type requirements  解法1 ：新物件再包一層泛型並Conform Protocol連動，但這樣沒有同一個介面可以當Type  進階解法：用物件當抽象介面">
+<meta name="twitter:image" content="https://missxie.github.io/images/ProtocolToType/image.png">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://missxie.github.io/2019/03/28/CreateSubCategories/">
+  <link rel="canonical" href="https://missxie.github.io/2022/05/28/ProtocolToType/">
 
 
 
 
 
-  <title>Hexo 建立「子分類」資料夾 | Xie's Blog</title>
+  <title>Protocol 無法當Type時的解法 | Xie's Blog</title>
   
 
 
@@ -255,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2019/03/28/CreateSubCategories/">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2022/05/28/ProtocolToType/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sally Xie">
@@ -272,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hexo 建立「子分類」資料夾</h1>
+          <h1 class="post-title" itemprop="name headline">Protocol 無法當Type時的解法</h1>
         
 
         <div class="post-meta">
@@ -284,8 +284,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-03-28T00:05:07+08:00">
-                2019-03-28
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-05-28T20:05:22+08:00">
+                2022-05-28
               </time>
             
 
@@ -307,8 +307,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
+                  <a href="/categories/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
                   </a>
                 </span>
 
@@ -344,51 +344,17 @@
       
 
       
-        <h1 id="前言碎碎念"><a href="#前言碎碎念" class="headerlink" title="前言碎碎念"></a><strong>前言碎碎念</strong></h1><p>嗨，大家好！初次接觸Hexo寫自己的Blog，就先寫寫一些環境建置小技巧熟悉一下囉～本篇就來記錄如何在「categories」大分類下建立子分類，大家也可以參考看看：]</p>
-<h1 id="成果"><a href="#成果" class="headerlink" title="成果"></a><strong>成果</strong></h1><p><img src="/images/hexo1.png" alt="實作結果"></p>
-<h1 id="流程概述"><a href="#流程概述" class="headerlink" title="流程概述"></a><strong>流程概述</strong></h1><ol>
-<li>建立「TensorFlow」資料夾</li>
-<li>更改資料夾內「index」md 檔敘述</li>
-<li>部署</li>
-</ol>
-<h1 id="開始實作"><a href="#開始實作" class="headerlink" title="開始實作"></a><strong>開始實作</strong></h1><h4 id="1-到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」"><a href="#1-到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」" class="headerlink" title="1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」"></a>1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」</h4><pre><code>$ cd your-hexo-site
-$ hexo new page TensorFlow
-</code></pre><h4 id="2-到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index-md檔修改內容"><a href="#2-到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index-md檔修改內容" class="headerlink" title="2.  到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index.md檔修改內容"></a>2.  到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index.md檔修改內容</h4><pre><code>---
-title: TensorFlow
-date: 2019-03-30 00:34:34
-type: &quot;TensorFlow&quot;
-comments: false
----
-</code></pre><p><strong>注意:</strong></p>
-<ol>
-<li>type敘述是主資料夾，若加雙引號就是標記要在主資料夾(categories)下建立子資料夾(TensorFlow)。</li>
-<li>頁面也會帶有評論。若需要關閉的話，請加入字段comments並將值設置為false。</li>
-</ol>
-<h4 id="3-回到終端機下部署剛剛建立好的資料夾囉"><a href="#3-回到終端機下部署剛剛建立好的資料夾囉" class="headerlink" title="3.  回到終端機下部署剛剛建立好的資料夾囉"></a>3.  回到終端機下部署剛剛建立好的資料夾囉</h4><pre><code>$ sudo hexo d -g
-</code></pre><h4 id="4-最後啟動伺服器，預設是-http-localhost-4000-立即觀看改變效果"><a href="#4-最後啟動伺服器，預設是-http-localhost-4000-立即觀看改變效果" class="headerlink" title="4.  最後啟動伺服器，預設是 http://localhost:4000 立即觀看改變效果"></a>4.  最後啟動伺服器，預設是 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 立即觀看改變效果</h4><pre><code>$ sudo hexo s
-</code></pre><table>
-<thead>
-<tr>
-<th>語法</th>
-<th style="text-align:left">註解  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>hexo d</td>
-<td style="text-align:left">ｄeploy 部署</td>
-</tr>
-<tr>
-<td>hexo g</td>
-<td style="text-align:left">generate 部署網站前先產生靜態檔案</td>
-</tr>
-<tr>
-<td>hexo s</td>
-<td style="text-align:left">server 啟動伺服器</td>
-</tr>
-</tbody>
-</table>
-
+        <h1 id="Protocol-無法當Type時的解法"><a href="#Protocol-無法當Type時的解法" class="headerlink" title="Protocol 無法當Type時的解法"></a>Protocol 無法當Type時的解法</h1><p><img src="/images/ProtocolToType/image.png" alt="截圖"></p>
+<p>Protocol ‘XXXXXXX’ can only be used as a generic constraint because it has Self or associated type requirements</p>
+<ul>
+<li>解法1 ：新物件再包一層泛型並Conform Protocol連動，但這樣沒有同一個介面可以當Type</li>
+</ul>
+<p>進階解法：用物件當抽象介面，因為Protocol associatedtype無法當property的型別才出此下策</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用物件當抽象介面，因為Protocol associatedtype無法當property的型別才出此下策</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResultsUseCase</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">init</span>() &#123;&#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">execute</span><span class="params">(models: [T])</span></span> -&gt; [<span class="type">T</span>] &#123;</span><br><span class="line">        <span class="built_in">fatalError</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// concrete Objects</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GetDefaultFilterResults</span>&lt;<span class="title">T</span>&gt;: <span class="title">ResultsUseCase</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">init</span>() &#123;&#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">execute</span><span class="params">(models: [T])</span></span> -&gt; [<span class="type">T</span>] &#123;</span><br><span class="line">        <span class="keyword">return</span> models</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>解法2 ：func丟的參數，改成Conform模式</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">XXX</span>&lt;T: ResultsUseCase&gt;<span class="params">(arg: T)</span></span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -405,9 +371,13 @@ comments: false
       
         <div class="post-tags">
           
-            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
           
-            <a href="/tags/categories/" rel="tag"># categories</a>
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/Apple/" rel="tag"># Apple</a>
+          
+            <a href="/tags/Protocol/" rel="tag"># Protocol</a>
           
         </div>
       
@@ -420,8 +390,8 @@ comments: false
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/28/HellWord/" rel="next" title="HellWord">
-                <i class="fa fa-chevron-left"></i> HellWord
+              <a href="/2022/05/25/Protocol/" rel="next" title="Swift 的 Protocol">
+                <i class="fa fa-chevron-left"></i> Swift 的 Protocol
               </a>
             
           </div>
@@ -429,10 +399,6 @@ comments: false
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/07/Analysis/" rel="prev" title="Kaggle競賽 - LANL Earthquake Prediction 賽前資料分析">
-                Kaggle競賽 - LANL Earthquake Prediction 賽前資料分析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -564,7 +530,7 @@ comments: false
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言碎碎念"><span class="nav-number">1.</span> <span class="nav-text">前言碎碎念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#成果"><span class="nav-number">2.</span> <span class="nav-text">成果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流程概述"><span class="nav-number">3.</span> <span class="nav-text">流程概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#開始實作"><span class="nav-number">4.</span> <span class="nav-text">開始實作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">1. 到終端機下進入自己的Hexo站點目錄，並建立新頁面，名為「TensorFlow」</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index-md檔修改內容"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">2.  到Hexo站點目錄下，進入Sourcea資料夾，找到剛剛建立的「TensorFlow」並點開index.md檔修改內容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-回到終端機下部署剛剛建立好的資料夾囉"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">3.  回到終端機下部署剛剛建立好的資料夾囉</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-最後啟動伺服器，預設是-http-localhost-4000-立即觀看改變效果"><span class="nav-number">4.0.0.4.</span> <span class="nav-text">4.  最後啟動伺服器，預設是 http://localhost:4000 立即觀看改變效果</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Protocol-無法當Type時的解法"><span class="nav-number">1.</span> <span class="nav-text">Protocol 無法當Type時的解法</span></a></li></ol></div>
             
 
           </div>
