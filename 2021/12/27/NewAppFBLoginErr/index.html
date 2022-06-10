@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="App,Facebook,Login,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="建立新的App，FB卻無法登入，誰在搞鬼？⚠️⚠️ 無法取得使用用戶Email權限，造成FB登入失敗⚠️⚠️因登入模組中必檢查這兩個權限，一定! 一定! 要在FB Develop設定開啟存取email、public_profile權限 ![截圖]/images/NewAppFBLoginErr/image3.png) FB 登入 存取權限層級 存取權限層級有兩種：標準和進階。 針對 2021 年">
+<meta name="keywords" content="App,Facebook,Login">
+<meta property="og:type" content="article">
+<meta property="og:title" content="建立新的App，FB卻無法登入，誰在搞鬼？">
+<meta property="og:url" content="https://missxie.github.io/2021/12/27/NewAppFBLoginErr/index.html">
+<meta property="og:site_name" content="Xie&#39;s Blog">
+<meta property="og:description" content="建立新的App，FB卻無法登入，誰在搞鬼？⚠️⚠️ 無法取得使用用戶Email權限，造成FB登入失敗⚠️⚠️因登入模組中必檢查這兩個權限，一定! 一定! 要在FB Develop設定開啟存取email、public_profile權限 ![截圖]/images/NewAppFBLoginErr/image3.png) FB 登入 存取權限層級 存取權限層級有兩種：標準和進階。 針對 2021 年">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://missxie.github.io/images/NewAppFBLoginErr/image2.png">
+<meta property="og:image" content="https://missxie.github.io/images/NewAppFBLoginErr/image1.png">
+<meta property="og:updated_time" content="2022-06-10T06:12:36.166Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="建立新的App，FB卻無法登入，誰在搞鬼？">
+<meta name="twitter:description" content="建立新的App，FB卻無法登入，誰在搞鬼？⚠️⚠️ 無法取得使用用戶Email權限，造成FB登入失敗⚠️⚠️因登入模組中必檢查這兩個權限，一定! 一定! 要在FB Develop設定開啟存取email、public_profile權限 ![截圖]/images/NewAppFBLoginErr/image3.png) FB 登入 存取權限層級 存取權限層級有兩種：標準和進階。 針對 2021 年">
+<meta name="twitter:image" content="https://missxie.github.io/images/NewAppFBLoginErr/image2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://missxie.github.io/2021/12/27/NewAppFBLoginErr/">
+
+
+
+
+
+  <title>建立新的App，FB卻無法登入，誰在搞鬼？ | Xie's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xie's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">學習筆記本</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://missxie.github.io/2021/12/27/NewAppFBLoginErr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sally Xie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xie's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">建立新的App，FB卻無法登入，誰在搞鬼？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-12-27T20:05:22+08:00">
+                2021-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/App/" itemprop="url" rel="index">
+                    <span itemprop="name">App</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="建立新的App，FB卻無法登入，誰在搞鬼？"><a href="#建立新的App，FB卻無法登入，誰在搞鬼？" class="headerlink" title="建立新的App，FB卻無法登入，誰在搞鬼？"></a>建立新的App，FB卻無法登入，誰在搞鬼？</h1><h2 id="⚠️⚠️-無法取得使用用戶Email權限，造成FB登入失敗⚠️⚠️"><a href="#⚠️⚠️-無法取得使用用戶Email權限，造成FB登入失敗⚠️⚠️" class="headerlink" title="⚠️⚠️ 無法取得使用用戶Email權限，造成FB登入失敗⚠️⚠️"></a>⚠️⚠️ 無法取得使用用戶Email權限，造成FB登入失敗⚠️⚠️</h2><p>因登入模組中必檢查這兩個權限，一定! 一定! 要在FB Develop設定開啟存取email、public_profile權限</p>
+<p>![截圖]/images/NewAppFBLoginErr/image3.png)</p>
+<h2 id="FB-登入-存取權限層級"><a href="#FB-登入-存取權限層級" class="headerlink" title="FB 登入 存取權限層級"></a>FB 登入 <strong><a href="https://developers.facebook.com/docs/graph-api/overview/access-levels/" target="_blank" rel="noopener">存取權限層級</a></strong></h2><ul>
+<li>存取權限層級有兩種：<a href="https://developers.facebook.com/docs/graph-api/overview/access-levels/#standard-access" target="_blank" rel="noopener">標準</a>和<a href="https://developers.facebook.com/docs/graph-api/overview/access-levels/#advanced-access" target="_blank" rel="noopener">進階</a>。</li>
+<li>針對 2021 年 2 月 16 日之前建立的商家應用程式，其 email 和 public_profile 權限，以及已通過應用程式審查批准的任何權限或功能（若有使用），都會自動獲准進階存取權限。</li>
+<li>所有<strong>新建的</strong>消費者應用程式都會自動獲准 email 和 public_profile 權限的進階存取權限。不過，這兩項權限都會預設為一般存取權限，必須手動切換為進階存取權限。</li>
+<li><strong>一般存取權限</strong>會由系統自動授予，並且允許存取你商家所擁有的資料。<strong>進階存取權限</strong>必須透過應用程式審查程序申請</li>
+</ul>
+<aside><br>💡 <strong><a href="https://developers.facebook.com/apps/?show_reminder=true" target="_blank" rel="noopener">FB Develop</a> &gt; 選取該APP &gt; 應用程式審查 &gt; 權限和功能 &gt; 請管理員開啟email存取設定</strong><br><br></aside>
+
+<aside><br>💡 只有<strong>管理員</strong>可提交應用程式審查。請聯絡應用程式管理員，以提交此應用程式進行審查。<br><br></aside>
+
+<ul>
+<li><p>沒打開email，權限層級會顯示 <strong>Standard Access(</strong>一般<strong>)</strong></p>
+<p>  <img src="/images/NewAppFBLoginErr/image2.png" alt="截圖 2021-11-11 上午11.45.38.png"></p>
+</li>
+<li><p>正常打開會顯示 <strong>Advanced Access （</strong>進階）</p>
+</li>
+</ul>
+<p><img src="/images/NewAppFBLoginErr/image1.png" alt="截圖 2021-11-11 上午11.45.00.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/App/" rel="tag"># App</a>
+          
+            <a href="/tags/Facebook/" rel="tag"># Facebook</a>
+          
+            <a href="/tags/Login/" rel="tag"># Login</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/11/15/Transection/" rel="next" title="交易(Transection)">
+                <i class="fa fa-chevron-left"></i> 交易(Transection)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/05/15/影像處理大神－卷積神經網絡(CNN)/" rel="prev" title="影像辨識大神－卷積神經網絡">
+                影像辨識大神－卷積神經網絡 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sally Xie</p>
+              <p class="site-description motion-element" itemprop="description">怕忘記，就學著做筆記。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#建立新的App，FB卻無法登入，誰在搞鬼？"><span class="nav-number">1.</span> <span class="nav-text">建立新的App，FB卻無法登入，誰在搞鬼？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#⚠️⚠️-無法取得使用用戶Email權限，造成FB登入失敗⚠️⚠️"><span class="nav-number">1.1.</span> <span class="nav-text">⚠️⚠️ 無法取得使用用戶Email權限，造成FB登入失敗⚠️⚠️</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FB-登入-存取權限層級"><span class="nav-number">1.2.</span> <span class="nav-text">FB 登入 存取權限層級</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-id-card"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sally Xie</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
